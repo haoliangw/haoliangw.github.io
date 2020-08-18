@@ -83,10 +83,87 @@ The SGWT did not approach to these two challenges directly, instead, they design
 Next we will first look at that, for the classical CWT, how can we transfer the scaling operation from the space domain to the frequency domain, and utilize delta impulse to achieved the translation of mother wavelet. Then in the following sections, after we got familiar with the notations of graph and the graph Fourier transform, we can discuss how to design the scaling and translation analogues on graphs.
 
 ### CWT as a Bandpass Filter
+We already know that the CWT computes the inner product of a scaled and translated mother wavelet $\psi_{s,a}(x)=\frac{1}{s}\psi(\frac{x-a}{s})$ with a signal $f(x)$:
+
+ $$CWT=\langle \psi_{s,a}, f \rangle=\int_{-\infty}^{\infty}\frac{1}{s}\psi^*(\frac{x-a}{s})f(x)dx$$
+
+We can also interpret the CWT as a frequency-based filtering of the signal by rewriting the CWT as an inverse Fourier transform.
+
+$$CWT=\frac{1}{2\pi}\int_{-\infty}^{\infty}\bar{\hat{\psi}}(s\omega)\hat{f}(\omega)e^{i\omega a}d\omega$$
+
+From these two equations, we could see that stretching a wavelet in time will cause its support in the frequency domain to shrink, and its center frequency will move towards lower frequencies. The following figure demonstrates this effect for a hypothetical wavelet and scale factors of 1,2, and 4.
+
+<div style="text-align: center">
+<img src="https://www.mathworks.com/help/wavelet/gs/wavelet_freqdomain.png"/>
+<p><i>Fig. 1. Fourier transform of the wavelets with scales 1,2 and 4. (Image source:<a href="https://www.mathworks.com/help/wavelet/gs/continuous-wavelet-transform-as-a-bandpass-filter.html">MathWorks</a>)</i></p>
+</div>
+
+In the above figure, $\omega$ corresponds to the frequency, $\hat{\psi}(\omega)$ is the Fourier transform of the wavelet function $\psi$, the amplitude of $\hat{\psi}(\omega)$ shows how much the wavelet contains certain frequency components, it is centered at $\omega_0$, which termed as the center frequency, it is the main frequency component of wavelet $\psi$. The support (none-zero part) of $\hat{\psi}(\omega)$ is the frequency band the wavelet contains (wavelet spectrum), when we do the wavelet transform, we multiple this $\hat{\psi}(\omega)$ with the frequencies of the signal ($\hat{f}$), only the frequency components within the support of the wavelet will remain, that is why CWT can act as a bandpass filter.
+
+Also in this figure, from the top to the bottom are three wavelets with different scales (1, 2, 4 respectively), we see that the center frequency has changed along with the scale. Bigger the scale, lower the center frequency ($center frequency=\omega/s$). CWT coefficients at lower scales represent energy in the input signal at higher frequencies, while CWT coefficients at higher scales represent energy in the input signal at lower frequencies. Noticed that, the width of the bandpass filter also changed, it is inversely proportional to scale. The width of the CWT filters decreases with increasing scale. This follows from the uncertainty relationships between the time and frequency support of a signal: the broader the support of a signal in time, the narrower its support in frequency. The converse relationship also holds.
 
 ### Delta Functions
+<div style="text-align: center">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Dirac_distribution_PDF.svg/650px-Dirac_distribution_PDF.svg.png"/>
+<p><i>Fig. 2. The delta function. (Image source:<a href="https://www.wikiwand.com/en/Dirac_delta_function#:~:text=As%20a%20distribution%2C%20the%20Dirac,of%20the%20Dirac%20delta%20function.">Wikipedia</a>)</i></p>
+</div>
+
+The **delta function $\delta(x)$**, also called the **Dirac delta function** or the **unit impulse symbol** in engineering and signal processing, is drawn as a singular arrow at one point to indicate an infinitely tall spike (an impulse). The y-axis value 1 represent its density ($\int_{-\infty}^{\infty}\delta(x)dx=1$), not height.
+
+The delta function has an important property: **Convolution of a function $f(x)$ with a shifted delta function $\delta(x-a)$ yields a shifted version of that function of the same amount $f(x-a)$:**
+
+$$f(x)\star\delta(x-a)=f(x-a)$$
+
+Using this property, translating the mother wavelet by a factor $a$ is the same as convoluting the mother wavelet with a shifted delta function $\delta(x-a)$:
+
+    Let
+$$\psi_{s}(x)=\frac{1}{s}\psi(\frac{x}{s})$$
+
+    then
+$$\psi_{s}(x) \star \delta(x-a)=\psi_{s}(x-a)=\frac{1}{s}\psi(\frac{x-a}{s})=\psi_{s,a}(x)$$
+
+Later, this result will be used to define the translation operation on graphs.
 
 ## Notation for Weighted Graphs
+A weighted graph $G = \{E, V , w\}$ consists of:
+
+* a set of vertices $V$
+* a set of edges $E$
+* a weight function $w: E\rightarrow\mathbb{R}^+$ which assigns a positive weight to each edge
+
+We consider here only finite graphs where $|V| = N < \infty$.
+
+The adjacency matrix $A$ for a weighted graph $G$ is the $N \times N$ matrix where
+
+$$
+A_{m,n} = \left
+\{
+\begin{array}{ll}
+w(e), & \mbox{if $e\in E$ connects vertices $m$ and $n$} \\
+0, & \mbox{otherwise} \\
+\end{array}\right.
+$$
+
+The degree matrix $D$ is a $N \times N$ diagonal matrix Where
+
+$$
+D_{m,n} = \left
+\{
+\begin{array}{ll}
+d(m)=\sum_nA_{m,n}, & \mbox{if $m=n$} \\
+0, & \mbox{otherwise} \\
+\end{array}\right.
+$$
+
+The Laplacian matrix, also called the graph Laplacian, is a matrix representation of a graph, many useful properties of a graph can be extract using the graph Laplacian. It is defined as
+
+$$L=D-A$$
+
+Noticed that:
+
+* L is symmetric.
+* L is positive-semidefinite (that is all its eigenvalues are non-negative).
+
 
 ## Graph Fourier Transform
 
