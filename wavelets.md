@@ -129,11 +129,9 @@ Later, this result will be used to define the translation operation on graphs.
 ## Notation for Weighted Graphs
 A weighted graph $G = \{E, V , w\}$ consists of:
 
-* a set of vertices $V$
-* a set of edges $E$
-* a weight function $w: E\rightarrow\mathbb{R}^+$ which assigns a positive weight to each edge
-
-We consider here only finite graphs where $|V| = N < \infty$.
+* a set of vertices $V$, where $|V| = N < \infty$.
+* a set of edges $E$.
+* a weight function $w: E\rightarrow\mathbb{R}^+$ which assigns a positive weight to each edge.
 
 The adjacency matrix $A$ for a weighted graph $G$ is the $N \times N$ matrix where
 
