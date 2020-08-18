@@ -116,10 +116,12 @@ $$f(x)\star\delta(x-a)=f(x-a)$$
 
 Using this property, translating the mother wavelet by a factor $a$ is the same as convoluting the mother wavelet with a shifted delta function $\delta(x-a)$:
 
-    Let
+Let
+
 $$\psi_{s}(x)=\frac{1}{s}\psi(\frac{x}{s})$$
 
-    then
+then
+
 $$\psi_{s}(x) \star \delta(x-a)=\psi_{s}(x-a)=\frac{1}{s}\psi(\frac{x-a}{s})=\psi_{s,a}(x)$$
 
 Later, this result will be used to define the translation operation on graphs.
