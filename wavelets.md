@@ -1,5 +1,6 @@
 # Spectral Graph Wavelet Transform
 
+
 > The spectral graph wavelet transform (SGWT) ([Hammond et al., 2011](https://www.sciencedirect.com/science/article/pii/S1063520310000552)) defines the wavelet transform for weighted graphs. The key point of the SGWT is to design a real-valued kernel function $g(\lambda)$ that acts as a bandpass filter in the Fourier domain. With the kernel functions $g(s\lambda)$ at discrete scales $s$, we are able to create wavelets that are not only localized in the graph spectrum, but also localized in the spatial vertex domain.
 
 Wavelet transform has been widely used in many fields such as signal processing, data compression, denoising, etc. Wavelet transform has the property that the wavelets are well localized in both frequency and space domain.
@@ -26,6 +27,8 @@ The challenges of designing the wavelet transform on graphs are mainly twofold:
 
 ## Table of Contents
 - [Classical Continuous Wavelet transform](#classical-continuous-wavelet-transform)
+  * [CWT as a Bandpass Filter](#cwt-as-a-bandpass-filter)
+  * [Delta Functions](#delta-functions)
 - [Notation for Weighted Graphs](#notation-for-weighted-graphs)
 - [Graph Fourier Transform](#graph-fourier-transform)
 - [Spectral Graph Wavelet Transform (SGWT)](#spectral-graph-wavelet-transform--sgwt-)
@@ -59,7 +62,7 @@ Then for given a signal $f(x)$, the **wavelet coefficients** are obtained by tak
 
 $$W_f(s,a)=\langle \psi_{s,a}, f \rangle=\int_{-\infty}^{\infty}\frac{1}{s}\psi^*(\frac{x-a}{s})f(x)dx$$
 
-We could think of the wavelet coefficient $W_f(s,a)$ at scale $s$ and translation $a$ being how much of $\psi_{s}$ exists in $f$ around $a$, with a continuous translation parameter $a$, we evaluate this amount of $\psi_{s}$ everywhere along $f$ with a fine step, and with a continuous scaling parameter, we repeated to do this using a gradually changing wavelet $\psi_{s}$.
+We could think of the wavelet coefficient $W_f(s,a)$ at scale $s$ and translation $a$ being how much of $\psi_{s}$ exists in $f$ around $a$, with a continuous translation parameter $a$, we evaluate this amount of $\psi_{s}$ everywhere along $f$ with a fine step, and with a continuous scaling parameter $s$, we repeat this evaluation using a gradually changing wavelet $\psi_{s}$.
 
 This process is invertible, i.e., $f(x)$ can be reconstructed using all the wavelet coefficients $W_f(s,a)$ at different scales and locations), provide that the mother wavelet $\psi(x)$ satisfies the **admissibility condition**:
 
@@ -76,6 +79,12 @@ So far, we are assuming that $f(x)$ is a signal on the real line, now we want to
 **The second challenge is how to define the scaling and translation operations for this mother wavelet on weighted graphs**. Assume that we are able to design a mother wavelet that is localized on a graph with respect to the shortest path distance measurement, then the scaling could be done by expanding/shrinking the radius of the mother wavelet, and the translation could be achieved by shifting the wavelet center to each vertex in the graph.
 
 The SGWT did not approach to these two challenges directly, instead, they design the mother wavelet in the frequency domain, and shown that scaling could be also done in the frequency domain. As for the translation operation, a delta impulse function (only have value 1 at one point and 0 everywhere else) was introduced to show that, translating a mother wavelet is the same as applying the mother wavelet to a delta impulse, this is useful because we can easily design a delta function on graphs, which simply is a vector that only only have value 1 at certain vertex and 0 elsewhere.
+
+Next we will first look at that, for the classical CWT, how can we transfer the scaling operation from the space domain to the frequency domain, and utilize delta impulse to achieved the translation of mother wavelet. Then in the following sections, after we got familiar with the notations of graph and the graph Fourier transform, we can discuss how to design the scaling and translation analogues on graphs.
+
+### CWT as a Bandpass Filter
+
+### Delta Functions
 
 ## Notation for Weighted Graphs
 
