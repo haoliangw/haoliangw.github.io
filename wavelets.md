@@ -127,7 +127,7 @@ $$\psi_{s}(x) \star \delta(x-a)=\psi_{s}(x-a)=\frac{1}{s}\psi(\frac{x-a}{s})=\ps
 Later, this result will be used to define the translation operation on graphs.
 
 ## Notation for Weighted Graphs
-A weighted graph $G = {E, V , w}$ consists of:
+A weighted graph $G = \\\{E, V , w\\\}$ consists of:
 
 * a set of vertices $V$, where $\|V\| = N < \infty$.
 * a set of edges $E$.
