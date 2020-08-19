@@ -241,8 +241,22 @@ which essentially is the $n$-th column of $\psi_s$. Then the wavelet coefficient
 
 $$W_f(s,n)=\langle \psi_{s,n},f \rangle$$
 
-## Scaling Functions
 
+
+## Scaling Functions
+Recalled that, when we double the scale value $s$, the center frequency of the wavelet is halved (moving towards the lower frequencies), its support in the frequency domain also halved, hence, to cover the entire low frequency band, we need to keep increasing the scale value to an infinite large number. This is obviously impractical, a common solution to this problem is to use a lowpass filter to cover the low frequency band, this lowpass filter is what called a **scaling function**.
+
+<div style="text-align: center">
+<img src="http://www.polyvalens.com/blog/wp-content/uploads/2011/07/fig3-3-gray1.png" width="600"/>
+<p><i>Fig. 4. A scaling function that covers the low frequency band. (Image source:<a href="http://www.polyvalens.com/blog/wavelets/theory/.">PolyValens</a>)</i></p>
+</div>
+
+Scaling function are particularly useful when the scale value is not allowed to become arbitrarily large to recover the low frequency components of the signal. In the SGWT, a scaling function $h(\lambda)$ is used to ensure stable recovery of the original signal $f$ when the scale value is sampled at a discrete manner.
+
+<div style="text-align: center">
+<img src="img/sgwt-scalig-function.png" width="600"/>
+<p><i>Fig. 5. Scaling function $h(\lambda)$ (dotted blue curve), wavelet generating kernels $g(s_j\lambda)$, where $t_1 = 2.0$ (red), $t_2 = 0.5848$ (yellow), $t_3 = 0.171$ (purple), $t_4 = 0.05$ (green). The black curve is the sum of squares of the scaling function and all the kernels. (Image source:<a href="https://www.sciencedirect.com/science/article/pii/S1063520310000552.">Hammond et al., 2011</a>)</i></p>
+</div>
 
 ## Polynomial Approximation
 
