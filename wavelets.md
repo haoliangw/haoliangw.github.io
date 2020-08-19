@@ -244,19 +244,27 @@ $$W_f(s,n)=\langle \psi_{s,n},f \rangle$$
 
 
 ## Scaling Functions
-Recalled that, when we double the scale value $s$, the center frequency of the wavelet is halved (moving towards the lower frequencies), its support in the frequency domain also halved, hence, to cover the entire low frequency band, we need to keep increasing the scale value to an infinite large number. This is obviously impractical, a common solution to this problem is to use a lowpass filter to cover the low frequency band, this lowpass filter is what called a **scaling function**.
+Recalled that, when we double the scale value $s$, the center frequency of the wavelet is halved (moving towards the lower frequencies), its support in the frequency domain also halved, hence, to cover the entire low frequency band, we need to keep increasing the scale value to an infinite large number. This is obviously impractical, a common solution to this problem is to use a **scaling function** that acts as a lowpass filter to cover the low frequency band.
 
 <div style="text-align: center">
 <img src="http://www.polyvalens.com/blog/wp-content/uploads/2011/07/fig3-3-gray1.png" width="600"/>
 <p><em>Fig. 4. A scaling function that covers the low frequency band. (Image source:<a href="http://www.polyvalens.com/blog/wavelets/theory/.">PolyValens</a>)</em></p>
 </div>
 
-Scaling function are particularly useful when the scale value is not allowed to become arbitrarily large to recover the low frequency components of the signal. In the SGWT, a scaling function $h(\lambda)$ is used to ensure stable recovery of the original signal $f$ when the scale value is sampled at a discrete manner.
+Scaling functions are particularly useful when the scale value is not allowed to become arbitrarily large to recover the low frequency components of the signal. In the SGWT, the scaling function is defined similar to the graph wavelets $\phi=Uh(\lambda)U^T$, using a non-negative kernel $h(\lambda)$ which essentially is a lowpass filter. $h(\lambda)$ satisfies that $h(0)>0$ and $\lim_{\lambda\rightarrow\infty}h(\lambda)=0$. The used of the scaling function ensure stable recovery of the original signal $f$ when the scale value is sampled at a discrete manner.
 
 <div style="text-align: center">
 <img src="img/sgwt-scaling-function.png" width="600"/>
 <p><em>Fig. 5. Scaling function $h(\lambda)$ (dotted blue curve), wavelet generating kernels $g(s_j\lambda)$, where $s_1 = 2.0$ (red), $s_2 = 0.5848$ (yellow), $s_3 = 0.171$ (purple), $s_4 = 0.05$ (green). The black curve is the sum of squares of the scaling function and all the kernels. (Image source:<a href="https://www.sciencedirect.com/science/article/pii/S1063520310000552.">Hammond et al., 2011</a>)</em></p>
 </div>
+
+The entire set of scaling coefficients are obtained by:
+
+$$\phi f=Uh(\lambda)U^Tf$$
+
+The scaling function that centered on vertex $n$ is given by $\phi_n=\phi\delta_n$, then the scaling coefficients centered on vertex $n$ can be obtained along by:
+
+$$S_f(n)=\langle \psi_{s,n},f \rangle$$
 
 ## Polynomial Approximation
 
