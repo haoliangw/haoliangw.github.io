@@ -46,7 +46,7 @@ The challenges of designing the wavelet transform on graphs are mainly twofold:
   * [Spatial localization](#spatial-localization)
 - [References](#references)
 
-<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+<small><em><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></em></small>
 
 
 
@@ -96,12 +96,12 @@ From these two equations, we could see that scaling a wavelet by $\frac{1}{s}$ i
 
 <div style="text-align: center">
 <img src="img/scaling-in-space.png" width="430"/>
-<p><i>Fig. 1. Scaling a wavelet in space domain with scale values 1,2 and 4.</i></p>
+<p><em>Fig. 1. Scaling a wavelet in space domain with scale values 1,2 and 4.</em></p>
 </div>
 
 <div style="text-align: center">
 <img src="https://www.mathworks.com/help/wavelet/gs/wavelet_freqdomain.png"/>
-<p><i>Fig. 2. Scaling a wavelet in frequency domain with scale values 1,2 and 4. (Image source:<a href="https://www.mathworks.com/help/wavelet/gs/continuous-wavelet-transform-as-a-bandpass-filter.html">MathWorks</a>)</i></p>
+<p><em>Fig. 2. Scaling a wavelet in frequency domain with scale values 1,2 and 4. (Image source:<a href="https://www.mathworks.com/help/wavelet/gs/continuous-wavelet-transform-as-a-bandpass-filter.html">MathWorks</a>)</em></p>
 </div>
 
 In the above figure, $\omega$ corresponds to the frequency, $\hat{\psi}(\omega)$ is the Fourier transform of the wavelet function $\psi$, the amplitude of $\hat{\psi}(\omega)$ shows how much the wavelet contains certain frequency components, it is centered at $\omega_0$, which termed as the **center frequency**, it is the main frequency component of wavelet $\psi$. The support (none-zero part) of $\hat{\psi}(\omega)$ is the frequency band the wavelet contains (wavelet spectrum), when we do the wavelet transform, we multiple this $\hat{\psi}(\omega)$ with the frequencies of the signal ($\hat{f}$), only the frequency components within the support of the wavelet will remain, that is why CWT can act as a **bandpass filter** (only frequencies in a frequency band are passed).
@@ -111,7 +111,7 @@ Also in this figure, from the top to the bottom are three wavelets with differen
 ### Delta Functions
 <div style="text-align: center">
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Dirac_distribution_PDF.svg/650px-Dirac_distribution_PDF.svg.png" width="450"/>
-<p><i>Fig. 3. The delta function. (Image source:<a href="https://www.wikiwand.com/en/Dirac_delta_function#:~:text=As%20a%20distribution%2C%20the%20Dirac,of%20the%20Dirac%20delta%20function.">Wikipedia</a>)</i></p>
+<p><em>Fig. 3. The delta function. (Image source:<a href="https://www.wikiwand.com/en/Dirac_delta_function#:~:text=As%20a%20distribution%2C%20the%20Dirac,of%20the%20Dirac%20delta%20function.">Wikipedia</a>)</em></p>
 </div>
 
 The **delta function $\delta(x)$**, also called the **Dirac delta function** or the **unit impulse symbol** in engineering and signal processing, is drawn as a singular arrow at one point to indicate an infinitely tall spike (an impulse). The y-axis value 1 represent its density ($\int_{-\infty}^{\infty}\delta(x)dx=1$), not height.
@@ -248,14 +248,14 @@ Recalled that, when we double the scale value $s$, the center frequency of the w
 
 <div style="text-align: center">
 <img src="http://www.polyvalens.com/blog/wp-content/uploads/2011/07/fig3-3-gray1.png" width="600"/>
-<p><i>Fig. 4. A scaling function that covers the low frequency band. (Image source:<a href="http://www.polyvalens.com/blog/wavelets/theory/.">PolyValens</a>)</i></p>
+<p><em>Fig. 4. A scaling function that covers the low frequency band. (Image source:<a href="http://www.polyvalens.com/blog/wavelets/theory/.">PolyValens</a>)</em></p>
 </div>
 
 Scaling function are particularly useful when the scale value is not allowed to become arbitrarily large to recover the low frequency components of the signal. In the SGWT, a scaling function $h(\lambda)$ is used to ensure stable recovery of the original signal $f$ when the scale value is sampled at a discrete manner.
 
 <div style="text-align: center">
 <img src="img/sgwt-scaling-function.png" width="600"/>
-<p font-style:italic><em>Fig. 5. Scaling function $h(\lambda)$ (dotted blue curve), wavelet generating kernels $g(s_j\lambda)$, where $s_1 = 2.0$ (red), $s_2 = 0.5848$ (yellow), $s_3 = 0.171$ (purple), $s_4 = 0.05$ (green). The black curve is the sum of squares of the scaling function and all the kernels. (Image source:<a href="https://www.sciencedirect.com/science/article/pii/S1063520310000552.">Hammond et al., 2011</a>)</em></p>
+<p><em>Fig. 5. Scaling function $h(\lambda)$ (dotted blue curve), wavelet generating kernels $g(s_j\lambda)$, where $s_1 = 2.0$ (red), $s_2 = 0.5848$ (yellow), $s_3 = 0.171$ (purple), $s_4 = 0.05$ (green). The black curve is the sum of squares of the scaling function and all the kernels. (Image source:<a href="https://www.sciencedirect.com/science/article/pii/S1063520310000552.">Hammond et al., 2011</a>)</em></p>
 </div>
 
 ## Polynomial Approximation
