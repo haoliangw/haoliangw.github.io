@@ -21,7 +21,7 @@ The challenges of designing the wavelet transform on graphs are mainly twofold:
 
 * **How to make the graph wavelet transform efficient for large graphs.**
 
-  Based on the solution to the scaling problem, a Fourier transform of the graph data is needed, it is done by diagonalizing the graph Laplacian matrix $\mathscr{L}=U\Lambda U$ (also termed as the eigendecomposition) to obtain the frequencies of the graph and the corresponding eigenbasis. However, this eigendecomposition is of $O(N^3)$ time complexity. For any graph with more than a few thousands vertices, the SGWT will be too expansive to use.
+  Based on the solution to the scaling problem, a Fourier transform of the graph data is needed, it is done by diagonalizing the graph Laplacian matrix $\mathscr{L}=U\Lambda U^T$ (also termed as the eigendecomposition) to obtain the frequencies of the graph and the corresponding eigenbasis. However, this eigendecomposition is of $O(N^3)$ time complexity. For any graph with more than a few thousands vertices, the SGWT will be too expansive to use.
 
   Hence, a polynomial approximation approach is used to calculate the transform without the expansive eigendecomposition. It is achieved by directly approximating the kernel function $g(s\lambda)$ by truncated Chebyshev polynomials. The maximum error of the truncated Chebyshev polynomials is only a slightly higher than that of the minimax polynomial (the unique polynomial which has the smallest maximum deviation from the true function), and in the region where $g(s\lambda)$ is smooth, truncated Chebyshev polynomials have significantly lower approximation error.
 
@@ -97,6 +97,9 @@ From these two equations, we could see that scaling a wavelet by $\frac{1}{s}$ i
 
 <div style="text-align: center">
 <img src="img/scaling-in-space.png"/ width="430">
+<img src="./img/scaling-in-space.png"/ width="430">
+<img src="../img/scaling-in-space.png"/ width="430">
+<img src="master/img/scaling-in-space.png"/ width="430">
 <p><i>Fig. 1. Scaling a wavelet in space domain with scale values 1,2 and 4.</i></p>
 </div>
 
@@ -173,7 +176,11 @@ Noticed that:
 
 
 ## Graph Fourier Transform
+The graph Fourier transform is based on the **eigendecomposition of the graph Laplacian**:
 
+$$\mathscr{L}=U\Lambda U^T$$
+
+where
 
 ## Spectral Graph Wavelet Transform (SGWT)
 ### Scaling of Graph Wavelets
