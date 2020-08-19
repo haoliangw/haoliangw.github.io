@@ -25,6 +25,8 @@ The challenges of designing the wavelet transform on graphs are mainly twofold:
 
   Hence, a polynomial approximation approach is used to calculate the transform without the expansive eigendecomposition. It is achieved by directly approximating the kernel function $g(s\lambda)$ by truncated Chebyshev polynomials. The maximum error of the truncated Chebyshev polynomials is only a slightly higher than that of the minimax polynomial (the unique polynomial which has the smallest maximum deviation from the true function), and in the region where $g(s\lambda)$ is smooth, truncated Chebyshev polynomials have significantly lower approximation error.
 
+
+
 ## Table of Contents
 - [Classical Continuous Wavelet transform](#classical-continuous-wavelet-transform)
   * [CWT as a Bandpass Filter](#cwt-as-a-bandpass-filter)
@@ -50,6 +52,8 @@ The challenges of designing the wavelet transform on graphs are mainly twofold:
 - [References](#references)
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
+
 
 ## Classical Continuous Wavelet transform
 The classical continuous wavelet transform (CWT) is construct from the **mother wavelet function $\psi(x)$**, which is a wave-like function that will burst for a short time and then quickly die away. To generate a continuous family of the wavelets, we simply scale and translate the mother wavelet by a continuous scaling factor $s>0$ and a continuous translation factor $a$:
@@ -133,6 +137,8 @@ $$\psi_{s}(x) \star \delta(x-a)=\psi_{s}(x-a)=\frac{1}{s}\psi(\frac{x-a}{s})=\ps
 
 Later, this result will be used to define the translation operation on graphs.
 
+
+
 ## Notation for Weighted Graphs
 A **weighted graph $G = \\\{E, V, w\\\}$** consists of:
 
@@ -151,7 +157,7 @@ w(e), & \mbox{if $e\in E$ connects vertices $m$ and $n$} \\
 \end{array}\right.
 $$
 
-The **degree matrix $D$** is a $N \times N$ diagonal matrix Where
+The **degree matrix $D$** is a $N \times N$ diagonal matrix where
 
 $$
 D_{m,n} = \left
@@ -172,12 +178,38 @@ Noticed that:
 * $\mathscr{L}$ is positive-semidefinite (that is all its eigenvalues are non-negative).
 
 
+
 ## Graph Fourier Transform
 The graph Fourier transform is based on the **eigendecomposition of the graph Laplacian**:
 
 $$\mathscr{L}=U\Lambda U^T$$
 
-where
+where $\Lambda=diag([\lambda_0,\dots,\lambda_{N-1}])\in\mathbb{R}^{N \times N}$ is a diagonal matrix that contains all the **eigenvalues** of $\mathscr{L}$, we could think of these eigenvalues as the frequencies of the graph.
+
+and $U=[u_0,\dots,u_{N-1}]\in\mathbb{R}^{N \times N}$ are the corresponding **eigenvectors** ($\mathscr{L}u_i=\lambda_iu_i$), it is an orthonormal basis, which means:
+
+$$
+\langle u_i,u_j \rangle = \left
+\{
+\begin{array}{ll}
+1, & \mbox{if $i=j$} \\
+0, & \mbox{otherwise} \\
+\end{array}\right.
+$$
+
+Then the **graph Fourier transform** for a signal $f\in\mathbb{R}^N$ on graph (a scalar for each vertex) will be:
+
+$$\hat{f}=U^Tf\in\mathbb{R}^N$$
+
+We could think of the $\hat{f}$ as the frequency constitution of $f$, each value $\hat{f}_i$ represent how much frequency $\lambda_i$ represent in signal $f$:
+
+$$\hat{f}_i=\langle u_i,f \rangle \in\mathbb{R}$$
+
+The **inverse graph Fourier transform** is simply by doing:
+
+$$f=U\hat{f}$$
+
+
 
 ## Spectral Graph Wavelet Transform (SGWT)
 ### Scaling of Graph Wavelets
