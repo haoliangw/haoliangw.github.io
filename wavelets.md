@@ -115,7 +115,7 @@ Also in this figure, from the top to the bottom are three wavelets with differen
 
 ### Delta Functions
 <div style="text-align: center">
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Dirac_distribution_PDF.svg/650px-Dirac_distribution_PDF.svg.png"/>
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Dirac_distribution_PDF.svg/650px-Dirac_distribution_PDF.svg.png" width="450"/>
 <p><i>Fig. 3. The delta function. (Image source:<a href="https://www.wikiwand.com/en/Dirac_delta_function#:~:text=As%20a%20distribution%2C%20the%20Dirac,of%20the%20Dirac%20delta%20function.">Wikipedia</a>)</i></p>
 </div>
 
