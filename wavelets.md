@@ -33,13 +33,8 @@ The challenges of designing the wavelet transform on graphs are mainly twofold:
   * [Delta Functions](#delta-functions)
 - [Notation for Weighted Graphs](#notation-for-weighted-graphs)
 - [Graph Fourier Transform](#graph-fourier-transform)
-- [Spectral Graph Wavelet Transform (SGWT)](#spectral-graph-wavelet-transform--sgwt-)
-  * [Scaling of Graph Wavelets](#scaling-of-graph-wavelets)
-    + [Scaling in the Classical Continuous Wavelets Transform](#scaling-in-the-classical-continuous-wavelets-transform)
-    + [Scaling Analogue on Weighted Graphs](#scaling-analogue-on-weighted-graphs)
-  * [Translation of Graph Wavelets](#translation-of-graph-wavelets)
-    + [Translation in the Classical Continuous Wavelets Transform](#translation-in-the-classical-continuous-wavelets-transform)
-    + [Translation Analogue on Weighted Graphs](#translation-analogue-on-weighted-graphs)
+- [Spectral Graph Wavelet Transform (SGWT)](#spectral-graph-wavelet-transform--sgwt)
+- [Scaling Functions](#scaling-functions)
 - [Polynomial Approximation](#polynomial-approximation)
 - [Inverse Graph Wavelet transform](#inverse-graph-wavelet-transform)
   * [Inverse of Continuous SGWT](#inverse-of-continuous-sgwt)
@@ -56,11 +51,11 @@ The challenges of designing the wavelet transform on graphs are mainly twofold:
 
 
 ## Classical Continuous Wavelet transform
-The classical continuous wavelet transform (CWT) is construct from the **mother wavelet function $\psi(x)$**, which is a wave-like function that will burst for a short time and then quickly die away. To generate a continuous family of the wavelets, we simply scale and translate the mother wavelet by a continuous scaling factor $s>0$ and a continuous translation factor $a$:
+The classical continuous wavelet transform (CWT) is construct from the **mother wavelet function $\psi(x)$**, which is a wave-like function that will burst for a short time and then quickly die away. To generate a continuous family of wavelets, we simply scale and translate the mother wavelet by a continuous scaling factor $s>0$ and a continuous translation factor $a$:
 
 $$\psi_{s,a}(x)=\frac{1}{s}\psi(\frac{x-a}{s})$$
 
-Note that the $\frac{1}{s}$ is the $L1$ normalization, a more common selection will be the $L2$ normalization ($\frac{1}{\sqrt{s}}$), the reason that $L1$ normalization is used in SGWT is because $L1$ normalization will make the wavelets at different scales all have the same amplitude in the frequency domain.
+Note that the $\frac{1}{s}$ is the $L1$ normalization. A more common selection will be the $L2$ normalization ($\frac{1}{\sqrt{s}}$), the reason that $L1$ normalization is used in SGWT is because $L1$ normalization will make the wavelets at different scales all have the same amplitude in the frequency domain.
 
 Then for given a signal $f(x)$, the **wavelet coefficients** are obtained by taken the inner product of each of these wavelet $\psi_{s,a}$ with the signal $f$:
 
@@ -212,13 +207,42 @@ $$f=U\hat{f}$$
 
 
 ## Spectral Graph Wavelet Transform (SGWT)
-### Scaling of Graph Wavelets
-#### Scaling in the Classical Continuous Wavelets Transform
-#### Scaling Analogue on Weighted Graphs
+So far, we know that we could rewrite the CWT as an inverse Fourier transform, interpret CWT as a bandpass filtering in the frequency domain:
 
-### Translation of Graph Wavelets
-#### Translation in the Classical Continuous Wavelets Transform
-#### Translation Analogue on Weighted Graphs
+$$CWT=\frac{1}{2\pi}\int_{-\infty}^{\infty}e^{i\omega a}\bar{\hat{\psi}}(s\omega)\hat{f}(\omega)d\omega$$
+
+by doing this, we also transfer the scaling operation from the space domain to the frequency domain.
+
+In other words, the CWT at scale $s$ and translation $a$ can be done by:
+
+* first taking the Fourier transform of the signal to obtain its Fourier coefficients $\hat{f}(\omega)$
+* then, do the bandpass filtering using $\bar{\hat{\psi}}(s\omega)$ in the frequency domain
+* finally, we do an inverse Fourier transform using $e^{i\omega a}$ to obtain the CWT coefficients.
+
+Following this process, we can design the **SGWT** as:
+
+$$SGWT=Ug(s\lambda)U^Tf$$
+
+where:
+
+* $\hat{f}=U^Tf$ is the Fourier transform of the signal
+* $g(\lambda)$ is a bandpass filter directly design in the graph spectrum, a scaled filter $g(s\lambda)$ at scale $s$ is then used to do the spectral filtering
+* at last, we do an inverse graph Fourier transform using $U$ to obtain the final graph wavelet transform coefficients
+
+We have learned that translation of a wavelet can be achieved by applying it to a delta function.
+
+$$\psi_{s,a}(x)=\psi_{s}(x) \star \delta(x-a)$$
+
+Then for SGWT, the graph wavelet at scale $s$ is $\psi_s=Ug(s\lambda)U^T$, translating this graph wavelet to centered on vertex $n$ is similar as applying $\psi_s$ to a delta function $\delta_n\in\mathbb{R}^N$ which only has value $1$ at on vertex $n$ and zeros elsewhere:
+
+$$\psi_{s,n}=\psi_s\delta_n=Ug(s\lambda)U^T\delta_n$$
+
+which essentially is the $n$-th column of $\psi_s$. Then the wavelet coefficients at scale $s$ and centered on vertex $n$ can be obtained along by:
+
+$$W_f(s,n)=\langle \psi_{s,n},f \rangle$$
+
+## Scaling Functions
+
 
 ## Polynomial Approximation
 
