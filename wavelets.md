@@ -254,8 +254,8 @@ Recalled that, when we double the scale value $s$, the center frequency of the w
 Scaling function are particularly useful when the scale value is not allowed to become arbitrarily large to recover the low frequency components of the signal. In the SGWT, a scaling function $h(\lambda)$ is used to ensure stable recovery of the original signal $f$ when the scale value is sampled at a discrete manner.
 
 <div style="text-align: center">
-<img src="img/sgwt-scalig-function.png" width="600"/>
-<p><i>Fig. 5. Scaling function $h(\lambda)$ (dotted blue curve), wavelet generating kernels $g(s_j\lambda)$, where $t_1 = 2.0$ (red), $t_2 = 0.5848$ (yellow), $t_3 = 0.171$ (purple), $t_4 = 0.05$ (green). The black curve is the sum of squares of the scaling function and all the kernels. (Image source:<a href="https://www.sciencedirect.com/science/article/pii/S1063520310000552.">Hammond et al., 2011</a>)</i></p>
+<img src="img/sgwt-scaling-function.png" width="600"/>
+<p font-style="italic">Fig. 5. Scaling function $h(\lambda)$ (dotted blue curve), wavelet generating kernels $g(s_j\lambda)$, where $s_1 = 2.0$ (red), $s_2 = 0.5848$ (yellow), $s_3 = 0.171$ (purple), $s_4 = 0.05$ (green). The black curve is the sum of squares of the scaling function and all the kernels. (Image source:<a href="https://www.sciencedirect.com/science/article/pii/S1063520310000552.">Hammond et al., 2011</a>)</p>
 </div>
 
 ## Polynomial Approximation
