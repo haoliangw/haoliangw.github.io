@@ -96,10 +96,10 @@ where $\hat{\psi}(\omega)$ and $\hat{f}(\omega)$ are the Fourier transforms of t
 From these two equations, we could see that scaling a wavelet by $\frac{1}{s}$ in the space domain is the as scaling a wavelet by $s$ in the frequency domain. The following two figures demonstrate the scaling effect in space and frequency domain respectively, for scale values $s=\\\{1,2,4\\\}$.
 
 <div style="text-align: center">
-<img src="img/scaling-in-space.png"/ width="430">
-<img src="./img/scaling-in-space.png"/ width="430">
-<img src="../img/scaling-in-space.png"/ width="430">
-<img src="master/img/scaling-in-space.png"/ width="430">
+<img src="img/scaling-in-space.png" width="430"/>
+<img src="./img/scaling-in-space.png" width="430"/>
+<img src="../img/scaling-in-space.png" width="430"/>
+<img src="master/img/scaling-in-space.png" width="430"/>
 <p><i>Fig. 1. Scaling a wavelet in space domain with scale values 1,2 and 4.</i></p>
 </div>
 
