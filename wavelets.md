@@ -97,15 +97,12 @@ From these two equations, we could see that scaling a wavelet by $\frac{1}{s}$ i
 
 <div style="text-align: center">
 <img src="img/scaling-in-space.png" width="430"/>
-<img src="./img/scaling-in-space.png" width="430"/>
-<img src="../img/scaling-in-space.png" width="430"/>
-<img src="master/img/scaling-in-space.png" width="430"/>
 <p><i>Fig. 1. Scaling a wavelet in space domain with scale values 1,2 and 4.</i></p>
 </div>
 
 <div style="text-align: center">
 <img src="https://www.mathworks.com/help/wavelet/gs/wavelet_freqdomain.png"/>
-<p><i>Fig. 1. Scaling a wavelet in frequency domain with scale values 1,2 and 4. (Image source:<a href="https://www.mathworks.com/help/wavelet/gs/continuous-wavelet-transform-as-a-bandpass-filter.html">MathWorks</a>)</i></p>
+<p><i>Fig. 2. Scaling a wavelet in frequency domain with scale values 1,2 and 4. (Image source:<a href="https://www.mathworks.com/help/wavelet/gs/continuous-wavelet-transform-as-a-bandpass-filter.html">MathWorks</a>)</i></p>
 </div>
 
 In the above figure, $\omega$ corresponds to the frequency, $\hat{\psi}(\omega)$ is the Fourier transform of the wavelet function $\psi$, the amplitude of $\hat{\psi}(\omega)$ shows how much the wavelet contains certain frequency components, it is centered at $\omega_0$, which termed as the **center frequency**, it is the main frequency component of wavelet $\psi$. The support (none-zero part) of $\hat{\psi}(\omega)$ is the frequency band the wavelet contains (wavelet spectrum), when we do the wavelet transform, we multiple this $\hat{\psi}(\omega)$ with the frequencies of the signal ($\hat{f}$), only the frequency components within the support of the wavelet will remain, that is why CWT can act as a **bandpass filter** (only frequencies in a frequency band are passed).
@@ -115,7 +112,7 @@ Also in this figure, from the top to the bottom are three wavelets with differen
 ### Delta Functions
 <div style="text-align: center">
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Dirac_distribution_PDF.svg/650px-Dirac_distribution_PDF.svg.png"/>
-<p><i>Fig. 2. The delta function. (Image source:<a href="https://www.wikiwand.com/en/Dirac_delta_function#:~:text=As%20a%20distribution%2C%20the%20Dirac,of%20the%20Dirac%20delta%20function.">Wikipedia</a>)</i></p>
+<p><i>Fig. 3. The delta function. (Image source:<a href="https://www.wikiwand.com/en/Dirac_delta_function#:~:text=As%20a%20distribution%2C%20the%20Dirac,of%20the%20Dirac%20delta%20function.">Wikipedia</a>)</i></p>
 </div>
 
 The **delta function $\delta(x)$**, also called the **Dirac delta function** or the **unit impulse symbol** in engineering and signal processing, is drawn as a singular arrow at one point to indicate an infinitely tall spike (an impulse). The y-axis value 1 represent its density ($\int_{-\infty}^{\infty}\delta(x)dx=1$), not height.
