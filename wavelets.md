@@ -260,7 +260,7 @@ Recalled that, when we double the scale value $s$, the center frequency of the w
 Scaling functions are particularly useful when the scale value is not allowed to become arbitrarily large to recover the low frequency components of the signal. In the SGWT, the scaling function is defined similar to the graph wavelets $\phi=Uh(\Lambda)U^T$, using a non-negative kernel $h(\lambda)$ which essentially is a lowpass filter. $h(\lambda)$ satisfies that $h(0)>0$ and $\lim_{\lambda\rightarrow\infty}h(\lambda)=0$. The used of the scaling function ensure stable recovery of the original signal $f$ when the scale value is sampled at a discrete manner.
 
 <div style="text-align: center">
-<img src="img/sgwt-scaling-function.png" width="600"/>
+<img src="img/sgwt-scaling-function.png" width="600" name="kernels"/>
 <p><em>Fig. 5. Scaling function $h(\lambda)$ (dotted blue curve), wavelet generating kernels $g(s_j\lambda)$, where $s_1 = 2.0$ (red), $s_2 = 0.5848$ (yellow), $s_3 = 0.171$ (purple), $s_4 = 0.05$ (green). The black curve is the sum of squares of the scaling function and all the kernels. (Image source:<a href="https://hal.inria.fr/hal-01943589/document.">Hammond et al., 2019</a>)</em></p>
 </div>
 
@@ -478,14 +478,18 @@ which looks like:
 <p><em>Fig. 7. Wavelet kernel g(x;\alpha=2,\beta=2,x_1=1,x_2=2).</em></p>
 </div>
 
-For the scaling function kernel we take $h(x) = \gamma exp(-(\frac{x}{0.6\lambda_{min}})^4)$, where $\gamma$ is set such that $h(0)$ has the same value as the maximum value of $g(x)$.
+For the scaling function kernel we take $h(x) = \gamma exp(-(\frac{x}{0.6\lambda_{min}})^4)$, where $\gamma$ is set such that $h(0)$ has the same value as the maximum value of $g(x)$, the $\lambda_{min}$ will be defined later.
 
 ### Scale Selection
-The wavelet scale $s_j$ are selected to be logarithmically equispaced, i.e., scale $s_j$ can be expressed as an exponential value, and the distance between the logarithm values of the scales (power values of $s_j$) is the same:
+In order to place the wavelets of different scales evenly in the frequency domain, i.e., joint each other hand-in-hand such as in [Fig. 5](#kernels), the wavelet scale $s_j$ are selected to be logarithmically equispaced, i.e., scale $s_j$ can be expressed as an exponential value, and the distance between the logarithm values of the scales (power values of $s_j$) is the same:
+
+$$s_j=s_1(\frac{s_J}{s_1})^{\frac{j-1}{J-1}},\mbox{ for $1\leq j\leq J$}$$
+
+The maximum and minimum scales are adapted to the spectrum of the $\mathscr{L}$ such that
 
 <div style="text-align: center">
-<img src="img/J-scales.png" width="600"/>
-<p><em>Fig. 8. Equispaced scales: $t_j=2*0.025^{\frac{j-1}{3}}$</em></p>
+<img src="img/equispaced-scales.png" width="600"/>
+<p><em>Fig. 8. Equispaced scales: $s_j=2*0.025^{\frac{j-1}{3}}$</em></p>
 </div>
 
 ## Examples
@@ -500,7 +504,11 @@ The first example is a point cloud of 500 points that sampled from the "Swiss ro
 
 * a) Vertex $n$ at which the wavelets are centered
 * b) Scaling function $h$
-* c) Graph wavelet $\psi_{s_1,n}$ that centered at vertex $n$
+* c) Graph wavelet $\psi_{s_1,n}$
+* d) Graph wavelet $\psi_{s_2,n}$
+* e) Graph wavelet $\psi_{s_3,n}$
+* f) Graph wavelet $\psi_{s_4,n}$
+* $s_1>s_2>s_3>s_4$
 
 ### Minnesota Road Network
 
