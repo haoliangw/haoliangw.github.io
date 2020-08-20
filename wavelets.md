@@ -36,6 +36,9 @@ The challenges of designing the wavelet transform on graphs are mainly twofold:
 - [Spectral Graph Wavelet Transform (SGWT)](#spectral-graph-wavelet-transform--sgwt)
 - [Scaling Functions](#scaling-functions)
 - [Polynomial Approximation](#polynomial-approximation)
+  * [Chebyshev Polynomials](#chebyshev-polynomials)
+  * [Chebyshev Approximation](#chebyshev-approximation)
+  * [Fast Computation of SGWT](#fast-computation-of-sgwt)
 - [Inverse Graph Wavelet transform](#inverse-graph-wavelet-transform)
   * [Inverse of Continuous SGWT](#inverse-of-continuous-sgwt)
   * [Inverse of Discretized SGWT](#inverse-of-discretized-sgwt)
@@ -255,7 +258,7 @@ Scaling functions are particularly useful when the scale value is not allowed to
 
 <div style="text-align: center">
 <img src="img/sgwt-scaling-function.png" width="600"/>
-<p><em>Fig. 5. Scaling function $h(\lambda)$ (dotted blue curve), wavelet generating kernels $g(s_j\lambda)$, where $s_1 = 2.0$ (red), $s_2 = 0.5848$ (yellow), $s_3 = 0.171$ (purple), $s_4 = 0.05$ (green). The black curve is the sum of squares of the scaling function and all the kernels. (Image source:<a href="https://www.sciencedirect.com/science/article/pii/S1063520310000552.">Hammond et al., 2011</a>)</em></p>
+<p><em>Fig. 5. Scaling function $h(\lambda)$ (dotted blue curve), wavelet generating kernels $g(s_j\lambda)$, where $s_1 = 2.0$ (red), $s_2 = 0.5848$ (yellow), $s_3 = 0.171$ (purple), $s_4 = 0.05$ (green). The black curve is the sum of squares of the scaling function and all the kernels. (Image source:<a href="https://hal.inria.fr/hal-01943589/document.">Hammond et al., 2019</a>)</em></p>
 </div>
 
 The entire set of scaling coefficients are obtained by:
@@ -267,7 +270,100 @@ The scaling function that centered on vertex $n$ is given by $\phi_n=\phi\delta_
 $$S_f(n)=\langle \psi_{s,n},f \rangle$$
 
 ## Polynomial Approximation
-We now have the idea of what SGWT is, it is simply a scaling function in addition to several graph wavelets with different scale values that each covers a sub-band of the graph spectrum in the frequency domain. However, one problem to the current SGWT design is that, it requires the eigendecomposition of the graph Laplacian $\mathscr{L}=U\Lambda U^T$ to obtain the eigenbasis $U$ and all the eigenvalues $\Lambda$.
+We now have the idea of what SGWT is, it is simply a scaling function in addition to several graph wavelets with different scale values that each covers a sub-band of the graph spectrum in the frequency domain. However, one problem to the current SGWT design is that, it requires the eigendecomposition of the graph Laplacian $\mathscr{L}=U\Lambda U^T$ to obtain the eigenbasis $U$ and all the eigenvalues $\Lambda$. The eigendecomposition is a very expansive process which is of $O(N^3)$ time complexity, for any graph that has more a few thousands of vertices, current SGWT will be infeasible to apply.
+
+Hence, we need a way to simplify the process or avoid using the eigendecomposition. [Hammond et al., 2011](https://www.sciencedirect.com/science/article/pii/S1063520310000552) proposed a polynomial approximation technique that approximate the kernel functions $h(\lambda)$ and $g(s\lambda)$ using truncated Chebyshev polynomials, the advantages of using this Chebyshev approximation are:
+
+* Avoid the expansive eigendecomposition
+* Fast computation that only relies on the repeated matrix-vector multiplication of $\mathscr{L}$ and $f$
+* Even more efficient when the graph is sparse (which is true in most cases)
+
+Now lets take a look at how exactly this Chebyshev approximation is carried out.
+
+### Chebyshev Polynomials
+The Chebyshev polynomials $T_n(y)$ are a sequences of polynomials that defined from the multiple angle formula of cosine.
+
+$$\cos(n\theta)=T_n(\cos(\theta))$$
+
+Let $y=\cos(\theta)$, the Chebyshev polynomials can be computed using its recurrence relation:
+
+$$T_0(y)=1$$
+$$T_1(y)=x$$
+$$T_2(y)=2y^2-1$$
+$$T_3(y)=4y^3-3y$$
+$$T_4(y)=8y^4-8y^2+1y$$
+$$\vdots$$
+$$T_{n+1}=2yT_n(y)-T_{n-1}(y)$$
+
+<div style="text-align: center">
+<img src="img/chebyshev-polynomials.png" width="600"/>
+<p><em>Fig. 6. Graphs of the Chebyshev polynomials $T_k(y)$ for $0 \leq k \leq 7$, plotted on the interval $[-1,1]$. (Image source:<a href="https://hal.inria.fr/hal-01943589/document.">Hammond et al., 2019</a>)</em></p>
+</div>
+
+The Chebyshev polynomials are orthogonal to each other on interval $[-1,1]$ with respect to the weight function $w(y)=\frac{1}{\sqrt{1-y^2}}$:
+
+$$
+\langle T_n(y),T_m(y) \rangle=
+\int_{-1}^{1}\frac{T_n(y)T_m(y)}{\sqrt{1-y^2}}dy=\left
+    \{
+    \begin{array}{ll}
+        \|T_0(y)\|=\pi & \mbox{if $m=n=0$} \\
+        \|T_n(y)\|=\pi/2 & \mbox{if $m=n \geq 1$}\\
+        0 & \mbox{if $m\neq n \geq 1$}
+    \end{array}
+    \right.
+$$
+
+### Chebyshev Approximation
+Polynomial approximation is about how to represent functions using polynomials, and Chebyshev approximation is the kind of polynomial approximate that replacing $x^k$ with $T_k(x)$.
+
+For a function $f(x)$ define on $[-1,1]$, we can approximate it using infinite number of Chebyshev polynomials:
+
+$$f(x) \approx \sum_{n=0}^{\infty} c_k T_k(x)$$
+
+Where $c_k$ are the Chebyshev coefficients, which is given by:
+
+$$c_k=\frac{2}{\pi} \langle T_k(x),f(x) \rangle=\frac{2}{\pi}\int_{-1}^{1}\frac{T_k(x)f(x)}{\sqrt{1-x^2}}dx
+=\frac{2}{\pi}\int_0^\pi{\cos(k\theta)f(\cos(\theta))d\theta}$$
+
+### Fast Computation of SGWT
+Noted that the Chebyshev polynomials are define on $[-1,1]$, in order to approximate the kernel functions $h(\lambda)$ and $g(s\lambda)$ that have $\lambda\geq 0$, we need to transform the Chebyshev polynomial domain from $[-1,1]$ to $[0,\lambda_{max}]$, where $\lambda_{max}$ is the maximum eigenvalue of $\mathscr{L}$. This can be achieved by changing the variable $x=\lambda_{max}(y+1)/2$, if we denote $\overline{T}_k(x)$ as the shifted Chebyshev polynomial, then:
+
+$$\overline{T}_k(x)=T_k(\frac{2x-\lambda_{max}}{\lambda_{max}})$$
+
+Then for each scale value $s_j$, we could use a truncated Chebyshev polynomial $p_j(x)$ (up to order $M$) to approximate the kernel function $g(s_jx)$:
+
+$$g(s_jx)\approx p_j(x)=\frac{1}{2}c_{j,0}+\sum_{k=1}^M{c_{j,k}\overline{T}_k(x)}$$
+
+valid for $x \in [0,\lambda_{max}]$, with the Chebyshev coefficients computed by:
+
+$$c_{j,k}=\frac{2}{\pi}\int_0^\pi {\cos(k\theta)g(s_j\frac{\lambda_{max}}{2}(\cos(\theta)+1))d\theta}$$
+
+The approximated graph wavelets at scale $s_j$ will be:
+
+$$\psi_{s_j}=Ug(s_j\Lambda)U^T\approx Up_j(\Lambda)U^T=p_j(U\Lambda U^T)=p_j(\mathscr{L})$$
+
+Note that in here, $Up_j(\Lambda)U^T=p_j(U\Lambda U^T)$ due to $U^TU=I$ so that:
+
+$$U\Lambda^kU=(U\Lambda U^T)^k=\mathscr{L}^k$$
+
+That is, by using the Chebyshev approximation, we can obtain the graph wavelets through the powers of graph Laplacian $\mathscr{L}^k$, hence, eigendecomposition avoided.
+
+The computation of Chebyshev coefficients $c_{j,k}$ at scale $s_j$ only requires the maximum eigenvalue $\lambda_{max}$ (only a rough estimate is needed) and the wavelet kernel $g(\lambda)$ (a bandpass filter that designed by us), so they can be computed before we know anything about the graph signal $f$.
+
+Once the Chebyshev coefficients $c_{j,k}$ are computed, the corresponding SGWT wavelet coefficients at scale $s_j$ are obtained by:
+
+$$\Tilde{W}_f(s_j)=\langle p_j(\mathscr{L}),f \rangle=\frac{1}{2}c_{j,0}f+\sum_{k=1}^{M}c_{j,k}\overline{T}_k(\mathscr{L})f$$
+
+Similarly, we could approximate the scaling function $\phi=Uh(\Lambda)U^T$ using a truncated Chebyshev polynomial $p_0(\mathscr{L})$ (up to order $M$), then the scaling function coefficients are given by:
+
+$$\Tilde{S}_f=\langle p_0(\mathscr{L}),f \rangle=\frac{1}{2}c_{0,0}f+\sum_{k=1}^{M}c_{0,k}\overline{T}_k(\mathscr{L})f$$
+
+However, the calculation of $\overline{T}_k(\mathscr{L})$ requires to compute powers of graph Laplacian up to $\mathscr{L}^k$, even though we only need to compute them once, it still very slow. [Hammond et al., 2011](https://www.sciencedirect.com/science/article/pii/S1063520310000552) argued that, instead of computing the matrix power of $\mathscr{L}^k$ in the $\overline{T}_k(\mathscr{L})$ explicitly, we could compute vectors $\overline{T}_k(\mathscr{L})f$ ($k={1,\dots,M}$) directly. This is due to the use of the recurrence relation of the Chebyshev polynomial, to compute the vector $\overline{T}_k(\mathscr{L})f$, we only need its previous two terms $\overline{T}_{k-1}(\mathscr{L})f$ and $\overline{T}_{k-2}(\mathscr{L})f$:
+
+$$\overline{T}_k(\mathscr{L})f=\frac{4}{\lambda_{max}}(\mathscr{L}-I)(\overline{T}_{k-1}(\mathscr{L})f)-\overline{T}_{k-2}(\mathscr{L})f$$
+
+Hence we could compute all $\overline{T}_k(\mathscr{L})f$ starting from $k=2$ using this recurrence relation. The above computation is dominated by the matrix ($\mathscr{L}-I$) vector ($\overline{T}_{k-1}(\mathscr{L})f$) multiplication, hence is much faster than computing the matrix powers of $\mathscr{L}^k$ in the $\overline{T}_k(\mathscr{L})$ explicitly.
 
 ## Inverse Graph Wavelet transform
 ### Inverse of Continuous SGWT
