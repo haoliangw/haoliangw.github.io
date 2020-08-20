@@ -40,8 +40,6 @@ The challenges of designing the wavelet transform on graphs are mainly twofold:
   * [Chebyshev Approximation](#chebyshev-approximation)
   * [Fast Computation of SGWT](#fast-computation-of-sgwt)
 - [Inverse Graph Wavelet transform](#inverse-graph-wavelet-transform)
-  * [Inverse of Continuous SGWT](#inverse-of-continuous-sgwt)
-  * [Inverse of Discretized SGWT](#inverse-of-discretized-sgwt)
 - [SGWT Kernel design](#sgwt-kernel-design)
 - [Examples](#examples)
 - [Appendix](#appendix)
@@ -360,9 +358,79 @@ $$\overline{T}_k(\mathscr{L})f=\frac{4}{\lambda_{max}}(\mathscr{L}-I)(\overline{
 Hence we could compute all $$\overline{T}_k(\mathscr{L})f$$ starting from $k=2$ using this recurrence relation. The above computation is dominated by the matrix ($\mathscr{L}-I$) vector ($$\overline{T}_{k-1}(\mathscr{L})f$$) multiplication, hence is much faster than computing the matrix powers of $\mathscr{L}^k$ in the $$\overline{T}_k(\mathscr{L})$$ explicitly.
 
 ## Inverse Graph Wavelet transform
-### Inverse of Continuous SGWT
+From the [Classical Continuous Wavelet transform](#classical-continuous-wavelet-transform) section, we know that if the mother wavelet $\psi(x)$ satisfies the admissibility condition:
 
-### Inverse of Discretized SGWT
+$$\int_0^{\infty}\frac{|\hat{\psi}(\omega)|^2}{\omega}d\omega=C_\psi<\infty$$
+
+Then we can invert the CWT to reconstruct input signal $f(x)$:
+
+$$f(x)=\frac{1}{C_\psi}\int_0^{\infty}\int_{-\infty}^{\infty}W_f(s,a)\psi_{s,a}(x)\frac{dads}{s}$$
+
+However, since we are only able to compute the SGWT at some discrete scale values, this inverse transform is not applicable to SGWT, we need to find some other ways to reconstruct the input signal.
+
+In the discrete situation, one such reconstruction method is to find the inverse matrix $W^{-1}$ of the forward transform matrix $W$ such that:
+
+$$W^{-1}Wf=If=f$$
+
+If $W$ is not a square matrix, then the pseudoinverse will be the natural choice which is given by:
+
+$$W^+=(W^*W)^{-1}W^*$$
+
+here, $W^*$ represents the conjugate transpose (or Hermitian transpose) of $W$, the pseudoinverse $W^+$ is a left inverse of $W$, it satisfies $W^+W=I$.
+
+So the question now become how to define the forward transform of SGWT as a matrix. The answer is actually very simple, we just stack the scaling function $\phi$ and all the graph wavelets $\psi_{s_j}$ at scales $s_1,\dots,s_J$ together to form a giant matrix $W$ that contains all the forward SGWT transform parameters:
+
+$$
+    \boldsymbol{W} =\left[
+        \begin{array}{c}
+             \phi_1^T\\
+             \vdots\\
+             \phi_N^T\\
+             \psi_{s_1,1}^T\\
+             \vdots\\
+             \psi_{s_1,N}^T\\
+             \vdots\\
+             \vdots\\
+             \psi_{s_J,1}^T\\
+             \vdots\\
+             \psi_{s_J,N}^T\\
+        \end{array}
+     \right]
+     =\left[
+        \begin{array}{ccc}
+             \phi_1(1) & \cdots & \phi_1(N)\\
+             \vdots &  & \vdots\\
+             \phi_N(1) & \cdots & \phi_N(N)\\
+             \psi_{s_1,1}(1) & \cdots & \psi_{s_1,1}(N)\\
+             \vdots &  & \vdots\\
+             \psi_{s_1,N}(1) & \cdots & \psi_{s_1,N}(N)\\
+             \vdots &  & \vdots\\
+             \vdots &  & \vdots\\
+             \psi_{s_J,1}(1) & \cdots & \psi_{s_J,1}(N)\\
+             \vdots &  & \vdots\\
+             \psi_{s_J,N}(1) & \cdots & \psi_{s_J,N}(N)\\
+        \end{array}
+     \right]
+     \in \mathbb{R}^{N(J+1)\times N}
+$$
+
+Since we have approximated the $\phi\approx p_0(\mathscr{L})$ and $\psi_{s_j}\approx p_j(\mathscr{L})$ using Chebyshev approximation, so the actual forward transform matrix would be:
+
+$$
+    \boldsymbol{\widetilde{W}} =\left[
+        \begin{array}{c}
+             p_0^T(\mathscr{L})\\
+             p_1^T(\mathscr{L})\\
+             \vdots\\
+             p_J^T(\mathscr{L})\\
+        \end{array}
+     \right]
+     \in \mathbb{R}^{N(J+1)\times N}
+$$
+
+and the pseudoinverse of $\widetilde{W}$ is given by:
+
+$$\widetilde{W}^+=(\widetilde{W}^*\widetilde{W})^{-1}\widetilde{W}^*$$
 
 ## SGWT Kernel design
 
