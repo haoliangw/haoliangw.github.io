@@ -475,13 +475,13 @@ which looks like:
 
 <div style="text-align: center">
 <img src="img/kernel-function.png" width="600"/>
-<p><em>Fig. 7. Wavelet kernel g(x;\alpha=2,\beta=2,x_1=1,x_2=2).</em></p>
+<p><em>Fig. 7. Wavelet kernel $g(x;\alpha=2,\beta=2,x_1=1,x_2=2)$.</em></p>
 </div>
 
 For the scaling function kernel we take $h(x) = \gamma exp(-(\frac{x}{0.6\lambda_{min}})^4)$, where $\gamma$ is set such that $h(0)$ has the same value as the maximum value of $g(x)$, the $\lambda_{min}$ will be defined later.
 
 ### Scale Selection
-In order to place the wavelets of different scales evenly in the frequency domain, i.e., joint each other hand-in-hand such as in [Fig. 5](#kernels), the wavelet scale $s_j$ are selected to be logarithmically equispaced, i.e., scale $s_j$ can be expressed as an exponential value, and the distance between the logarithm values of the scales (power values of $s_j$) is the same:
+In order to place the wavelets of different scales evenly in the frequency domain, i.e., join each other hand-in-hand such as in [Fig. 5](#kernels), the wavelet scale $s_j$ are selected to be logarithmically equispaced, i.e., scale $s_j$ can be expressed as an exponential value, and the distance between the logarithm values of the scales (power values of $s_j$) is the same:
 
 $$s_j=s_1(\frac{s_J}{s_1})^{\frac{j-1}{J-1}},\mbox{ for $1\leq j\leq J$}$$
 
