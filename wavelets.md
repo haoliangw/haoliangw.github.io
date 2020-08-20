@@ -495,8 +495,12 @@ The first example is a point cloud of 500 points that sampled from the "Swiss ro
 
 <div style="text-align: center">
 <img src="img/swiss-roll.png" width="600"/>
-<p><em>Fig. 9. Wavelets on point cloud of the Swiss roll</em></p>
+<p><em>Fig. 9. Wavelets on point cloud of the Swiss roll.</em></p>
 </div>
+
+* a) Vertex $n$ at which the wavelets are centered
+* b) Scaling function $h$
+* c) Graph wavelet $\psi_{s_1,n}$ that centered at vertex $n$
 
 ### Minnesota Road Network
 
