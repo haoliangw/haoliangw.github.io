@@ -44,6 +44,9 @@ The challenges of designing the wavelet transform on graphs are mainly twofold:
   * [Kernel Design](#kernel-design)
   * [Scale Selection](#scale-selection)
 - [Examples](#examples)
+  * [Swiss Roll](#swiss-roll)
+  * [Minnesota Road Network](#minnesota-road-network)
+  * [Regular Grid of Lake Geneva](#regular-grid-of-lake-geneva)
 - [Appendix](#appendix)
   * [Frame Bound](#frame-bound)
   * [Spatial Localization](#spatial-localization)
@@ -486,7 +489,14 @@ The wavelet scale $s_j$ are selected to be logarithmically equispaced, i.e., sca
 </div>
 
 ## Examples
-### Swiss Roll
+###
+
+The first example is a point cloud of 500 points that sampled from the "Swiss roll" function (a dataset commonly used in dimension reduction).
+
+<div style="text-align: center">
+<img src="img/J-scales.png" width="600"/>
+<p><em>Fig. 8. Equispaced scales: $t_j=2*0.025^{\frac{j-1}{3}}$</em></p>
+</div>
 
 ### Minnesota Road Network
 
