@@ -221,7 +221,7 @@ In other words, the CWT at scale $s$ and translation $a$ can be done by:
 
 Following this process, we can design the **SGWT** as:
 
-$$SGWT=Ug(s\lambda)U^Tf$$
+$$SGWT=Ug(s\Lambda)U^Tf$$
 
 where:
 
@@ -233,9 +233,9 @@ We have learned that translation of a wavelet can be achieved by applying it to 
 
 $$\psi_{s,a}(x)=\psi_{s}(x) \star \delta(x-a)$$
 
-Then for SGWT, the graph wavelet at scale $s$ is $\psi_s=Ug(s\lambda)U^T$, translating this graph wavelet to centered on vertex $n$ is similar as applying $\psi_s$ to a delta function $\delta_n\in\mathbb{R}^N$ which only has value $1$ at on vertex $n$ and zeros elsewhere:
+Then for SGWT, the graph wavelet at scale $s$ is $\psi_s=Ug(s\Lambda)U^T$, translating this graph wavelet to centered on vertex $n$ is similar as applying $\psi_s$ to a delta function $\delta_n\in\mathbb{R}^N$ which only has value $1$ at on vertex $n$ and zeros elsewhere:
 
-$$\psi_{s,n}=\psi_s\delta_n=Ug(s\lambda)U^T\delta_n$$
+$$\psi_{s,n}=\psi_s\delta_n=Ug(s\Lambda)U^T\delta_n$$
 
 which essentially is the $n$-th column of $\psi_s$. Then the wavelet coefficients at scale $s$ and centered on vertex $n$ can be obtained along by:
 
@@ -251,7 +251,7 @@ Recalled that, when we double the scale value $s$, the center frequency of the w
 <p><em>Fig. 4. A scaling function that covers the low frequency band. (Image source:<a href="http://www.polyvalens.com/blog/wavelets/theory/.">PolyValens</a>)</em></p>
 </div>
 
-Scaling functions are particularly useful when the scale value is not allowed to become arbitrarily large to recover the low frequency components of the signal. In the SGWT, the scaling function is defined similar to the graph wavelets $\phi=Uh(\lambda)U^T$, using a non-negative kernel $h(\lambda)$ which essentially is a lowpass filter. $h(\lambda)$ satisfies that $h(0)>0$ and $\lim_{\lambda\rightarrow\infty}h(\lambda)=0$. The used of the scaling function ensure stable recovery of the original signal $f$ when the scale value is sampled at a discrete manner.
+Scaling functions are particularly useful when the scale value is not allowed to become arbitrarily large to recover the low frequency components of the signal. In the SGWT, the scaling function is defined similar to the graph wavelets $\phi=Uh(\Lambda)U^T$, using a non-negative kernel $h(\lambda)$ which essentially is a lowpass filter. $h(\lambda)$ satisfies that $h(0)>0$ and $\lim_{\lambda\rightarrow\infty}h(\lambda)=0$. The used of the scaling function ensure stable recovery of the original signal $f$ when the scale value is sampled at a discrete manner.
 
 <div style="text-align: center">
 <img src="img/sgwt-scaling-function.png" width="600"/>
@@ -260,13 +260,14 @@ Scaling functions are particularly useful when the scale value is not allowed to
 
 The entire set of scaling coefficients are obtained by:
 
-$$\phi f=Uh(\lambda)U^Tf$$
+$$\phi f=Uh(\Lambda)U^Tf$$
 
 The scaling function that centered on vertex $n$ is given by $\phi_n=\phi\delta_n$, then the scaling coefficients centered on vertex $n$ can be obtained along by:
 
 $$S_f(n)=\langle \psi_{s,n},f \rangle$$
 
 ## Polynomial Approximation
+We now have the idea of what SGWT is, it is simply a scaling function in addition to several graph wavelets with different scale values that each covers a sub-band of the graph spectrum in the frequency domain. However, one problem to the current SGWT design is that, it requires the eigendecomposition of the graph Laplacian $\mathscr{L}=U\Lambda U^T$ to obtain the eigenbasis $U$ and all the eigenvalues $\Lambda$.
 
 ## Inverse Graph Wavelet transform
 ### Inverse of Continuous SGWT
