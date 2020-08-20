@@ -287,12 +287,6 @@ $$\cos(n\theta)=T_n(\cos(\theta))$$
 
 Let $y=\cos(\theta)$, the Chebyshev polynomials can be computed using its recurrence relation:
 
-$$T_0(y)=1$$
-$$T_1(y)=x$$
-$$T_2(y)=2y^2-1$$
-$$T_3(y)=4y^3-3y$$
-$$T_4(y)=8y^4-8y^2+1y$$
-$$\vdots$$
 $$T_{n+1}=2yT_n(y)-T_{n-1}(y)$$
 
 <div style="text-align: center">
@@ -353,11 +347,11 @@ The computation of Chebyshev coefficients $c_{j,k}$ at scale $s_j$ only requires
 
 Once the Chebyshev coefficients $c_{j,k}$ are computed, the corresponding SGWT wavelet coefficients at scale $s_j$ are obtained by:
 
-$$\Tilde{W}_f(s_j)=\langle p_j(\mathscr{L}),f \rangle=\frac{1}{2}c_{j,0}f+\sum_{k=1}^{M}c_{j,k}\overline{T}_k(\mathscr{L})f$$
+$$\widetilde{W}_f(s_j)=\langle p_j(\mathscr{L}),f \rangle=\frac{1}{2}c_{j,0}f+\sum_{k=1}^{M}c_{j,k}\overline{T}_k(\mathscr{L})f$$
 
 Similarly, we could approximate the scaling function $\phi=Uh(\Lambda)U^T$ using a truncated Chebyshev polynomial $p_0(\mathscr{L})$ (up to order $M$), then the scaling function coefficients are given by:
 
-$$\Tilde{S}_f=\langle p_0(\mathscr{L}),f \rangle=\frac{1}{2}c_{0,0}f+\sum_{k=1}^{M}c_{0,k}\overline{T}_k(\mathscr{L})f$$
+$$\widetilde{S}_f=\langle p_0(\mathscr{L}),f \rangle=\frac{1}{2}c_{0,0}f+\sum_{k=1}^{M}c_{0,k}\overline{T}_k(\mathscr{L})f$$
 
 However, the calculation of $\overline{T}_k(\mathscr{L})$ requires to compute powers of graph Laplacian up to $\mathscr{L}^k$, even though we only need to compute them once, it still very slow. [Hammond et al., 2011](https://www.sciencedirect.com/science/article/pii/S1063520310000552) argued that, instead of computing the matrix power of $\mathscr{L}^k$ in the $\overline{T}_k(\mathscr{L})$ explicitly, we could compute vectors $\overline{T}_k(\mathscr{L})f$ ($k={1,\dots,M}$) directly. This is due to the use of the recurrence relation of the Chebyshev polynomial, to compute the vector $\overline{T}_k(\mathscr{L})f$, we only need its previous two terms $\overline{T}_{k-1}(\mathscr{L})f$ and $\overline{T}_{k-2}(\mathscr{L})f$:
 
