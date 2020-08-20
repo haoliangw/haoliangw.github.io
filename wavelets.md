@@ -485,12 +485,16 @@ In order to place the wavelets of different scales evenly in the frequency domai
 
 $$s_j=s_1(\frac{s_J}{s_1})^{\frac{j-1}{J-1}},\mbox{ for $1\leq j\leq J$}$$
 
-The maximum and minimum scales are adapted to the spectrum of the $\mathscr{L}$ such that
-
 <div style="text-align: center">
 <img src="img/equispaced-scales.png" width="600"/>
 <p><em>Fig. 8. Equispaced scales: $s_j=2*0.025^{\frac{j-1}{3}}$</em></p>
 </div>
+
+The maximum scale $s_1$ and the minimum scale $s_J$ are selected such that:
+
+* Maximum scale $s_1=\frac{x_2}{\lambda_{min}}$, so for $\lambda\in[\lambda_{min},\infty]$, $g(s_1\lambda)$ behaves as the third part of $g(\lambda)$ (the decaying part).
+* Minimum scale $s_J=\frac{x_1}{\lambda_{max}}$, so for $\lambda\in[0,\lambda_{max}]$, $g(s_J\lambda)$ behaves as the first part of $g(\lambda)$ (the monic power part).
+* $\lambda_{max}$ is given, $\lambda_{min}=\frac{\lambda_{max}}{K}$, where $K$ is a hyperparameter that controls to what extend we want to push our wavelet kernel $g(s_1\lambda)$ to the low frequency band. Bigger $K$ leads to bigger $s_1$, which corresponding to lower frequency band.
 
 ## Examples
 ### Swiss Roll
