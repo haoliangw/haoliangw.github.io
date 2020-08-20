@@ -484,12 +484,12 @@ For the scaling function kernel we take $h(x) = \gamma exp(-(\frac{x}{0.6\lambda
 The wavelet scale $s_j$ are selected to be logarithmically equispaced, i.e., scale $s_j$ can be expressed as an exponential value, and the distance between the logarithm values of the scales (power values of $s_j$) is the same:
 
 <div style="text-align: center">
-<img src="img/j-scales.png" width="600"/>
+<img src="img/J-scales.png" width="600"/>
 <p><em>Fig. 8. Equispaced scales: $t_j=2*0.025^{\frac{j-1}{3}}$</em></p>
 </div>
 
 ## Examples
-###
+### Swiss Roll
 
 The first example is a point cloud of 500 points that sampled from the "Swiss roll" function (a dataset commonly used in dimension reduction).
 
