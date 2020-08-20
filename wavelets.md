@@ -40,11 +40,13 @@ The challenges of designing the wavelet transform on graphs are mainly twofold:
   * [Chebyshev Approximation](#chebyshev-approximation)
   * [Fast Computation of SGWT](#fast-computation-of-sgwt)
 - [Inverse Graph Wavelet transform](#inverse-graph-wavelet-transform)
-- [SGWT Kernel design](#sgwt-kernel-design)
+- [SGWT Design Details](#sgwt-design-details)
+  * [Kernel Design](#kernel-design)
+  * [Scale Selection](#scale-selection)
 - [Examples](#examples)
 - [Appendix](#appendix)
   * [Frame Bound](#frame-bound)
-  * [Spatial localization](#spatial-localization)
+  * [Spatial Localization](#spatial-localization)
 - [References](#references)
 
 <small><em><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></em></small>
@@ -107,7 +109,7 @@ From these two equations, we could see that scaling a wavelet by $\frac{1}{s}$ i
 
 In the above figure, $\omega$ corresponds to the frequency, $\hat{\psi}(\omega)$ is the Fourier transform of the wavelet function $\psi$, the amplitude of $\hat{\psi}(\omega)$ shows how much the wavelet contains certain frequency components, it is centered at $\omega_0$, which termed as the **center frequency**, it is the main frequency component of wavelet $\psi$. The support (none-zero part) of $\hat{\psi}(\omega)$ is the frequency band the wavelet contains (wavelet spectrum), when we do the wavelet transform, we multiple this $\hat{\psi}(\omega)$ with the frequencies of the signal ($\hat{f}$), only the frequency components within the support of the wavelet will remain, that is why CWT can act as a **bandpass filter** (only frequencies in a frequency band are passed).
 
-Also in this figure, from the top to the bottom are three wavelets with different scales (1, 2, 4 respectively), we see that the center frequency has changed along with the scale. Bigger the scale, lower the center frequency ($center frequency=\omega/s$). CWT coefficients at lower scales represent energy in the input signal at higher frequencies, while CWT coefficients at higher scales represent energy in the input signal at lower frequencies. Noticed that, the width of the bandpass filter also changed, it is inversely proportional to scale. The width of the CWT filters decreases with increasing scale. This follows from the uncertainty relationships between the time and frequency support of a signal: the broader the support of a signal in time, the narrower its support in frequency. The converse relationship also holds.
+Also in this figure, from the top to the bottom are three wavelets with different scales (1, 2, 4 respectively), we see that the center frequency has changed along with the scale. Bigger the scale, lower the center frequency ($\omega/s$). CWT coefficients at lower scales represent energy in the input signal at higher frequencies, while CWT coefficients at higher scales represent energy in the input signal at lower frequencies. Noticed that, the width of the bandpass filter also changed, it is inversely proportional to scale. The width of the CWT filters decreases with increasing scale. This follows from the uncertainty relationships between the time and frequency support of a signal: the broader the support of a signal in time, the narrower its support in frequency. The converse relationship also holds.
 
 ### Delta Functions
 <div style="text-align: center">
@@ -432,14 +434,68 @@ and the pseudoinverse of $\widetilde{W}$ is given by:
 
 $$\widetilde{W}^+=(\widetilde{W}^*\widetilde{W})^{-1}\widetilde{W}^*$$
 
-## SGWT Kernel design
+## SGWT Design Details
+
+### Kernel Design
+The SGWT kernel $g(\lambda)$ is a bandpass filter, it should satisfies:
+
+* $g(0)=0$
+* $\lim_{\lambda\rightarrow\infty}g(\lambda)=0$
+
+In addition to these, in order to ensure the spatial localization of the graph wavelets, the kernel $g(\lambda)$ should also behaves as a monic power of $\lambda$ near the origin (see [Appendix](#spatial-localization)).
+
+[Hammond et al., 2011](https://www.sciencedirect.com/science/article/pii/S1063520310000552) designed a kernel function $g(x)$ that is exactly a monic power near $0$, and will decay to 0 for large $\lambda$, in between, the kernel function is set to be a cubic spline that ensuring continuity of $g$ and $g^{'}$:
+
+$$
+g(x;\alpha,\beta,x_1,x_2)=\left
+    \{
+    \begin{array}{ll}
+        x_1^{-\alpha}x^\alpha & \mbox{for $x<x_1$} \\
+        s(x) & \mbox{for $x_1 \leq x \leq x_2$} \\
+        x_2^{\beta}x^{-\beta} & \mbox{for $x>x_2$}
+    \end{array}\right.
+$$
+
+One specific choice of $g(x)$ could be:
+
+$$
+g(x;\alpha=2,\beta=2,x_1=1,x_2=2)=\left
+    \{
+    \begin{array}{ll}
+        x^2 & \mbox{for $x<1$} \\
+        s(x)=-5+11x-6x^2 + x^3 & \mbox{for $1 \leq x \leq 2$} \\
+        \frac{4}{x^2} & \mbox{for $x>2$}
+    \end{array}\right.
+$$
+
+which looks like:
+
+<div style="text-align: center">
+<img src="img/kernel-function.png" width="600"/>
+<p><em>Fig. 7. Wavelet kernel g(x;\alpha=2,\beta=2,x_1=1,x_2=2).</em></p>
+</div>
+
+For the scaling function kernel we take $h(x) = \gamma exp(-(\frac{x}{0.6\lambda_{min}})^4)$, where $\gamma$ is set such that $h(0)$ has the same value as the maximum value of $g(x)$.
+
+### Scale Selection
+The wavelet scale $s_j$ are selected to be logarithmically equispaced, i.e., scale $s_j$ can be expressed as an exponential value, and the distance between the logarithm values of the scales (power values of $s_j$) is the same:
+
+<div style="text-align: center">
+<img src="img/J-scales.png" width="600"/>
+<p><em>Fig. 8. Equispaced scales: $t_j=2*0.025^{\frac{j-1}{3}}$</em></p>
+</div>
 
 ## Examples
+### Swiss Roll
+
+### Minnesota Road Network
+
+### Regular Grid of Lake Geneva
 
 ## Appendix
 ### Frame Bound
 
-### Spatial localization
+### Spatial Localization
 
 ## References
 [1] Hammond, David K., Pierre Vandergheynst, and Rémi Gribonval. "[Wavelets on graphs via spectral graph theory.](https://www.sciencedirect.com/science/article/pii/S1063520310000552)" Applied and Computational Harmonic Analysis 30.2 (2011): 129-150.
