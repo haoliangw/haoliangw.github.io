@@ -380,11 +380,11 @@ In the discrete situation, one such reconstruction method is to find the inverse
 
 $$W^{-1}Wf=If=f$$
 
-If $W$ is not a square matrix, then the pseudoinverse will be the natural choice (since it gives the minimum norm solution to a linear system, see [Appendix](#minimum-norm-solution)) which is given by:
+If $W$ is not a square matrix, then the pseudoinverse will be the natural choice which is given by:
 
 $$W^+=(W^*W)^{-1}W^*$$
 
-here, $W^*$ represents the conjugate transpose (or Hermitian transpose) of $W$, the pseudoinverse $W^+$ is a left inverse of $W$. ($W^*$ and $W^+$ are totally different)
+here, $W^*$ represents the conjugate transpose (or Hermitian transpose) of $W$, the pseudoinverse $W^+$ is a left inverse of $W$ ($W^*$ and $W^+$ are totally different). In [Hammond et al., 2011](https://www.sciencedirect.com/science/article/pii/S1063520310000552), the minimum-norm property of the pesudoinverse is introduced, however, it has little to do with the reconstruction process, see [Appendix](#minimum-norm-solution) for more detail.
 
 The pseudoinverse $W^+$ only satisfies $W^+W=I$ (i.e., is a left inverse of  $W$) when columns of $W$ are linearly independent (proved in [Appendix](#frame-bound)).
 
@@ -563,6 +563,19 @@ The goal of this example is to show that SGWT wavelets will implicitly adapt to 
 ### Spatial Localization
 
 ### Minimum Norm Solution
+Since we interpret the forward SGWT as a linear mapping (represented as matrix $W$) from $\mathbb{R}^N$ to $\mathbb{R}^{N(J+1)}$, the number of coefficients $c=Wf$ is $N(J+1)$, which is greater than the dimension of the graph signal $N$, it is a overcomplete transform, so that we can construct infinite number of left inverse $M$ such that $MW=I$.
+
+But now, suppose that the forward transform matrix $W$ and the coefficients $c$ are given, we want to find a signal $x\in\mathbb{R}^N$ such that:
+
+$$Wx=c$$
+
+If this equation is solvable (obviously true), then the pseudoinverse $W^+$ can be used to find the mininum norm solution $\|x\|_2$ among all the solutions of $Wx=c$, i.e., if we set variable $z$ as:
+
+$$z=W^+c$$
+
+then $\|z\|_2\leq\|x\|_2$ for all solutions $x\in\mathbb{R}^N$.
+
+However, since we have proved that columns of $W$ are linear independent, the pseudoinverse $W^+$ satisfied $W^+W=I$ (see [Appendix](#frame-bound)), we have $W^+c=f$ which is exactly what we want in the signal reconstruction, hence, this minimum norm property of pseudoinverse is not necessary in current literature.
 
 ## References
 [1] Hammond, David K., Pierre Vandergheynst, and Rémi Gribonval. "[Wavelets on graphs via spectral graph theory.](https://www.sciencedirect.com/science/article/pii/S1063520310000552)" Applied and Computational Harmonic Analysis 30.2 (2011): 129-150.
