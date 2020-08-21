@@ -288,7 +288,7 @@ If this is true, then for some small scale $s$, when we plot the normalized wave
 
 In [Hammond et al., 2019](https://hal.inria.fr/hal-01943589/document), the localization property of the graph wavelets is proved by:
 
-* **Lemma 2**: If two kernel function $g$ and $\widetilde{g}$ are close to each other, then their resulting wavelets $\psi_{s,n}$ and $$\widetilde{\psi}_{s,n}$$ should also be close to each other. This is the necessary justification if we want to prove the localization property of $\psi_{s,n}$ by proving $$\widetilde{\psi}_{s,n}$$ is localized. (An error bound $M(s)$ is used in Lemma 2: $|g(s\lambda)-\widetilde{g}(s\lambda)| \leq M(t)$, this error bound is proved in Lemma 4 $M(s) \leq s^{K+1}\frac{\lambda_{N-1}^{K+1}}{(K+1)!}B$.)
+* **Lemma 2**: If two kernel function $g$ and $\widetilde{g}$ are close to each other, then their resulting wavelets $\psi_{s,n}$ and $$\widetilde{\psi}_{s,n}$$ should also be close to each other. This is the necessary justification if we want to prove the localization property of $\psi_{s,n}$ by proving $$\widetilde{\psi}_{s,n}$$ is localized. (An error bound $M(s)$ is used in Lemma 2: $$\|g(s\lambda)-\widetilde{g}(s\lambda)\| \leq M(t)$$, this error bound is proved in Lemma 4 $M(s) \leq s^{K+1}\frac{\lambda_{N-1}^{K+1}}{(K+1)!}B$.)
 
 * **Lemma 3**: The powers of graph Laplacian $\mathscr{L}^k$ are localized on graphs. Then for wavelets $\psi_{s,n}$ that can be approximated by some powers of graph Laplacian $\mathscr{L}^k$, $\psi_{s,n}$ will also be localized on graphs.
 
