@@ -141,7 +141,7 @@ Later, this result will be used to define the translation operation on graphs.
 
 
 
-## Notation for Weighted Graphs
+## Notations for Weighted Graph
 A **weighted graph $G = \\\{E, V, w\\\}$** consists of:
 
 * a set of vertices $V$, where $\|V\| = N < \infty$.
@@ -251,7 +251,7 @@ $$W_f(s,n)=\langle \psi_{s,n},f \rangle$$
 
 
 ## Scaling Functions
-Recalled that, when we double the scale value $s$, the center frequency of the wavelet is halved (moving towards the lower frequencies), its support in the frequency domain also halved, hence, to cover the entire low frequency band, we need to keep increasing the scale value to an infinite large number. This is obviously impractical, a common solution to this problem is to use a **scaling function** that acts as a lowpass filter to cover the low frequency band.
+Recall that, when we double the scale value $s$, the center frequency of the wavelet is halved (moving towards the lower frequency band), its support in the frequency domain is also halved, hence, to cover the entire low frequency band, we need to keep increasing the scale value to an infinite large number. This is obviously impractical, a common solution to this problem is to use a **scaling function** that acts as a lowpass filter to cover the low frequency band.
 
 <div style="text-align: center">
 <img src="http://www.polyvalens.com/blog/wp-content/uploads/2011/07/fig3-3-gray1.png" width="600"/>
@@ -410,7 +410,7 @@ If $W$ is not a square matrix, then the pseudoinverse will be the natural choice
 
 $$W^+=(W^*W)^{-1}W^*$$
 
-here, $W^*$ represents the conjugate transpose (or Hermitian transpose) of $W$, the pseudoinverse $W^+$ is a left inverse of $W$ ($W^*$ and $W^+$ are totally different). In [Hammond et al., 2011](https://www.sciencedirect.com/science/article/pii/S1063520310000552), the minimum-norm property of the pesudoinverse is introduced, however, it has little to do with the reconstruction process, see [Appendix](#minimum-norm-solution) for more detail.
+here, $$W^*$$ represents the conjugate transpose (or Hermitian transpose) of $W$, the pseudoinverse $W^+$ is a left inverse of $W$ ($W^*$ and $W^+$ are totally different). In [Hammond et al., 2011](https://www.sciencedirect.com/science/article/pii/S1063520310000552), the minimum-norm property of the pesudoinverse is introduced, however, it has little to do with the reconstruction process, see [Appendix](#minimum-norm-solution) for more detail.
 
 The pseudoinverse $W^+$ only satisfies $W^+W=I$ (i.e., is a left inverse of  $W$) when columns of $W$ are linearly independent (proved in [Appendix](#frame-bound)).
 
