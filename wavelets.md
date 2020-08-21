@@ -280,11 +280,11 @@ The main advantage of the wavelet transform over the Fourier transform is that t
 
 Similarly, in SGWT the graph wavelets can be localized in frequency domain if we design their wavelet kernel $g(\lambda)$ as a bandpass filter. However, we have not discussed how to make the graph wavelets localized in space domain.
 
-On graphs, the localization property of a normalized graph wavelet $\frac{\psi_{s,n}}{\|||\psi_{s,n}\|||}$ can be interpret as that:
+On graphs, the localization property of a normalized graph wavelet $$\frac{\psi_{s,n}}{\|\psi_{s,n}\|}$$ can be interpret as that:
 
-**when $s$ is small (corresponding to high frequency information), $\frac{\psi_{s,n}}{\|||\psi_{s,n}\|||}$ will approach $0$ for vertices that are far away from the center vertex $n$.**
+**when $s$ is small (corresponding to high frequency information), $$\frac{\psi_{s,n}}{\|\psi_{s,n}\|}$$ will approach $0$ for vertices that are far away from the center vertex $n$.**
 
-If this is true, then for some small scale $s$, when we plot the normalized wavelet $\frac{\psi_{s,n}}{\|||\psi_{s,n}\|||}$ on graph, its value will gradually decay from the center vertex $n$ to its connected vertices, which is said to localized around vertex $n$.
+If this is true, then for some small scale $s$, when we plot the normalized wavelet $$\frac{\psi_{s,n}}{\|\psi_{s,n}\|}$$ on graph, its value will gradually decay from the center vertex $n$ to its connected vertices, which is said to localized around vertex $n$.
 
 In [Hammond et al., 2019](https://hal.inria.fr/hal-01943589/document), the localization property of the graph wavelets is proved by:
 
