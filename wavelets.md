@@ -295,7 +295,7 @@ In [Hammond et al., 2019](https://hal.inria.fr/hal-01943589/document), the local
 * **Lemma 4**: The approximation error of $\psi_{s,n}$ using $\mathscr{L}^k$ is only proved for some specific kernel $g$. That is:
 kernel $g$ should satisfies $g(0)=0$ and is sufficient smooth around 0 ($g^{(r)}(0)=0$ for all $r<K$), then we can approximate the scaled kernel $g(s\lambda)$ by $\widetilde{g}(s\lambda)$, which is a Taylor expansion of $g(s\lambda)$. Since $g^{(r)}(0)=0$ for all $r<K$, so only the last term in this expansion is nonzero, and it is a power of $s\lambda$, finally, its corresponding wavelet can be expressed as a power of $\mathscr{L}$ which is localized on graph. Additionally, it is proved that for this kind of kernels, the approximation error $M(s)=\underset{\lambda\in[0,\lambda_{N-1}]}{sup}|g(s\lambda)-\widetilde{g}(s\lambda)| \leq s^{K+1}\frac{\lambda_{N-1}^{K+1}}{(K+1)!}B$ is indeed bounded.
 
-* **Theorem 2**: With all the previous Lemmas, here the localization property of $\frac{\psi_{s,n}}{\|||\psi_{s,n}\|||}$ is proved, such that if $s\rightarrow 0$, then for vertices that are far away from the center vertex $n$, this normalized graph wavelet will decay to zero.
+* **Theorem 2**: With all the previous Lemmas, here the localization property of $$\frac{\psi_{s,n}}{\|\psi_{s,n}\|}$$ is proved, such that if $s\rightarrow 0$, then for vertices that are far away from the center vertex $n$, this normalized graph wavelet will decay to zero.
 
 If you are interested in more details about how these Lemmas and Theorem are proved, it is welcome to refer to my fully annotated version of this paper [Wavelets on graphs via spectral graph theory](https://www.overleaf.com/read/sgpjrkfvjzwv).
 
