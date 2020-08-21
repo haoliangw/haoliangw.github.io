@@ -559,6 +559,11 @@ The goal of this example is to show that SGWT wavelets will implicitly adapt to 
 
 ## Appendix
 ### Frame Bound
+The stability of recovering the signal $f$ from the transform coefficients (such as our wavelet coefficients $W_f$) is study through the frame bounds of the transform vectors $\psi$.
+
+Formally, for a Hilbert space $\mathscr{H}$, a set of vectors $\Gamma_n\in\mathscr{H}$ is said to be a frame with frame bounds $A$ and $B$ if for all $f\in\mathscr{H}$, the following condition is true:
+
+$$A\|$$
 
 ### Spatial Localization
 
@@ -569,7 +574,7 @@ But now, suppose that the forward transform matrix $W$ and the coefficients $c$ 
 
 $$Wx=c$$
 
-If this equation is solvable (obviously true), then the pseudoinverse $W^+$ can be used to find the mininum norm solution $\|x\|_2$ among all the solutions of $Wx=c$, i.e., if we set variable $z$ as:
+If this equation is solvable (obviously true), then the pseudoinverse $W^+$ can be used to find the mininum norm solution $\\\|x\\\|_2$ among all the solutions of $Wx=c$, i.e., if we set variable $z$ as:
 
 $$z=W^+c$$
 
