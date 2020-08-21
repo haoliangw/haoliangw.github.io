@@ -273,6 +273,8 @@ The scaling function that centered on vertex $n$ is given by $\phi_n=\phi\delta_
 
 $$S_f(n)=\langle \psi_{s,n},f \rangle$$
 
+
+
 ## Polynomial Approximation
 We now have the idea of what SGWT is, it is simply a scaling function in addition to several graph wavelets with different scale values that each covers a sub-band of the graph spectrum in the frequency domain. However, one problem to the current SGWT design is that, it requires the eigendecomposition of the graph Laplacian $\mathscr{L}=U\Lambda U^T$ to obtain the eigenbasis $U$ and all the eigenvalues $\Lambda$. The eigendecomposition is a very expansive process which is of $O(N^3)$ time complexity, for any graph that has more a few thousands of vertices, current SGWT will be infeasible to apply.
 
@@ -382,7 +384,7 @@ If $W$ is not a square matrix, then the pseudoinverse will be the natural choice
 
 $$W^+=(W^*W)^{-1}W^*$$
 
-here, $W^*$ represents the conjugate transpose (or Hermitian transpose) of $W$, the pseudoinverse $W^+$ is a left inverse of $W$.
+here, $W^*$ represents the conjugate transpose (or Hermitian transpose) of $W$, the pseudoinverse $W^+$ is a left inverse of $W$. ($W^*$ and $W^+$ are totally different)
 
 The pseudoinverse $W^+$ only satisfies $W^+W=I$ (i.e., is a left inverse of  $W$) when columns of $W$ are linearly independent (proved in [Appendix](#frame-bound)).
 
