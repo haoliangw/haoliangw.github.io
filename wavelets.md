@@ -286,7 +286,7 @@ On graphs, the localization property of a normalized graph wavelet $$\frac{\psi_
 
 If this is true, then for some small scale $s$, when we plot the normalized wavelet $$\frac{\psi_{s,n}}{\|\psi_{s,n}\|}$$ on graph, its value will gradually decay from the center vertex $n$ to its connected vertices, which is said to be localized around vertex $n$.
 
-The normalization $$\|\psi_{s,n}\|$$ is needed since $\psi_{s,n}$ already will approach to 0 when $s\rightarrow 0$, provide that we design $g(0)=0$ and $g(\lambda)$ is continuous.
+The normalization $$\|\psi_{s,n}\|$$ is needed since $\psi_{s,n}$ already will approach to 0 when $s\rightarrow 0$, provide that we design $g(\lambda)$ is continuous and $g(0)=0$.
 
 In [Hammond et al., 2019](https://hal.inria.fr/hal-01943589/document), the spatial localization property of the graph wavelets is proved by:
 
