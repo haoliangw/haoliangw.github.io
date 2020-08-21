@@ -563,7 +563,22 @@ The stability of recovering the signal $f$ from the transform coefficients (such
 
 Formally, for a Hilbert space $\mathscr{H}$, a set of vectors $\Gamma_n\in\mathscr{H}$ is said to be a frame with frame bounds $A$ and $B$ if for all $f\in\mathscr{H}$, the following condition is true:
 
-$$A\|$$
+$$A\\\|f\\\|^2 \leq \\\|\langle \Gamma_n,f \rangle\\\|^2 \leq B\\\|f\\\|^2$$
+
+In [Hammond et al., 2019](https://hal.inria.fr/hal-01943589/document) **Theorem 1**:
+
+Given a set of scales $\{s_j\}_{j=1}^J$, the set $\Gamma=\{\phi_n\}_{n=1}^N \cup \{\psi_{s_j,n}\}_{j=1}^{J}{}_{n=1}^N$ forms a frame with bounds $A$, $B$ given by:
+
+$$A=\underset{\lambda\in[0,\lambda_{N-1}]}{min} G(\lambda)$$
+
+$$B=\underset{\lambda\in[0,\lambda_{N-1}]}{max} G(\lambda)$$
+
+where $G(\lambda)=h^2(\lambda)+\sum_j{g(s_{j}\lambda)^2}$.
+
+Theorem 1 gives the frame bounds of $\Gamma$.
+
+In particularly, when $A>0$, $\Gamma$ is a Riesz sequence such that all vectors in $\Gamma$ are linearly independent to each other.
+
 
 ### Spatial Localization
 
@@ -578,9 +593,9 @@ If this equation is solvable (obviously true), then the pseudoinverse $W^+$ can 
 
 $$z=W^+c$$
 
-then $\|z\|_2\leq\|x\|_2$ for all solutions $x\in\mathbb{R}^N$.
+then $\\\|z\\\|_2\leq\\\|x\\\|_2$ for all solutions $x\in\mathbb{R}^N$.
 
-However, since we have proved that columns of $W$ are linear independent, the pseudoinverse $W^+$ satisfied $W^+W=I$ (see [Appendix](#frame-bound)), we have $W^+c=f$ which is exactly what we want in the signal reconstruction, hence, this minimum norm property of pseudoinverse is not necessary in current literature.
+However, since we have proved that columns of $W$ are linear independent given frame bound $A>0$ (see [Appendix](#frame-bound)), the pseudoinverse $W^+$ satisfied $W^+W=I$, we have $W^+c=f$ which is exactly what we want in the signal reconstruction, hence, this minimum norm property of pseudoinverse is not necessary in current literature.
 
 ## References
 [1] Hammond, David K., Pierre Vandergheynst, and Rémi Gribonval. "[Wavelets on graphs via spectral graph theory.](https://www.sciencedirect.com/science/article/pii/S1063520310000552)" Applied and Computational Harmonic Analysis 30.2 (2011): 129-150.
