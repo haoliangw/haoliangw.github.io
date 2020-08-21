@@ -507,7 +507,7 @@ The first example is a point cloud that sampled from the "Swiss roll" function (
 
 <div style="text-align: center">
 <img src="img/swiss-roll.png" width="600"/>
-<p><em>Fig. 9. Wavelets on point cloud of the Swiss roll.</em></p>
+<p><em>Fig. 9. Wavelets on point cloud of the Swiss roll. (Image source:<a href="https://hal.inria.fr/hal-01943589/document.">Hammond et al., 2019</a>)</em></p>
 </div>
 
 * a) Vertex $n$ at which the wavelets are centered
@@ -525,7 +525,7 @@ The second example is a road network in Minnesota. The edges represent the roads
 
 <div style="text-align: center">
 <img src="img/road-network.png" width="600"/>
-<p><em>Fig. 10. Wavelets on Minnesota road network.</em></p>
+<p><em>Fig. 10. Wavelets on Minnesota road network. (Image source:<a href="https://hal.inria.fr/hal-01943589/document.">Hammond et al., 2019</a>)</em></p>
 </div>
 
 * a) Vertex $n$ at which the scaling function and wavelets are centered
@@ -543,7 +543,7 @@ The last example is a $256\times153$ masked regular grid of the lake Geneva, i.e
 
 <div style="text-align: center">
 <img src="img/lake.png" width="600"/>
-<p><em>Fig. 11. Wavelets on masked regular grid of the lake Geneva.</em></p>
+<p><em>Fig. 11. Wavelets on masked regular grid of the lake Geneva. (Image source:<a href="https://hal.inria.fr/hal-01943589/document.">Hammond et al., 2019</a>)</em></p>
 </div>
 
 * a) Graph wavelet $\psi_{s_1,n}$
