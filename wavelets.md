@@ -50,6 +50,7 @@ The challenges of designing the wavelet transform on graphs are mainly twofold:
 - [Appendix](#appendix)
   * [Frame Bound](#frame-bound)
   * [Spatial Localization](#spatial-localization)
+  * [Minimum Norm Solution](#minimum-norm-solution)
 - [References](#references)
 
 <small><em><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></em></small>
@@ -373,15 +374,17 @@ $$f(x)=\frac{1}{C_\psi}\int_0^{\infty}\int_{-\infty}^{\infty}W_f(s,a)\psi_{s,a}(
 
 However, since we are only able to compute the SGWT at some discrete scale values, this inverse transform is not applicable to SGWT, we need to find some other ways to reconstruct the input signal.
 
-In the discrete situation, one such reconstruction method is to find the inverse matrix $W^{-1}$ of the forward transform matrix $W$ such that:
+In the discrete situation, one such reconstruction method is to find the inverse matrix $W^{-1}$ of the forward transform matrix $W$ (squared) such that:
 
 $$W^{-1}Wf=If=f$$
 
-If $W$ is not a square matrix, then the pseudoinverse will be the natural choice which is given by:
+If $W$ is not a square matrix, then the pseudoinverse will be the natural choice (since it gives the minimum norm solution to a linear system, see [Appendix](#minimum-norm-solution)) which is given by:
 
 $$W^+=(W^*W)^{-1}W^*$$
 
-here, $W^*$ represents the conjugate transpose (or Hermitian transpose) of $W$, the pseudoinverse $W^+$ is a left inverse of $W$, it satisfies $W^+W=I$.
+here, $W^*$ represents the conjugate transpose (or Hermitian transpose) of $W$, the pseudoinverse $W^+$ is a left inverse of $W$.
+
+The pseudoinverse $W^+$ only satisfies $W^+W=I$ (i.e., is a left inverse of  $W$) when columns of $W$ are linearly independent (proved in [Appendix](#frame-bound)).
 
 So the question now become how to define the forward transform of SGWT as a matrix. The answer is actually very simple, we just stack the scaling function $\phi$ and all the graph wavelets $\psi_{s_j}$ at scales $s_1,\dots,s_J$ together to form a giant matrix $W$ that contains all the forward SGWT transform parameters:
 
@@ -496,10 +499,11 @@ The maximum scale $s_1$ and the minimum scale $s_J$ are selected such that:
 * Minimum scale $s_J=\frac{x_1}{\lambda_{max}}$, so for $\lambda\in[0,\lambda_{max}]$, $g(s_J\lambda)$ behaves as the first part of $g(\lambda)$ (the monic power part).
 * $\lambda_{max}$ is given, $\lambda_{min}=\frac{\lambda_{max}}{K}$, where $K$ is a hyperparameter that controls to what extend we want to push our wavelet kernel $g(s_1\lambda)$ to the low frequency band. Bigger $K$ leads to bigger $s_1$, which corresponding to lower frequency band.
 
+
+
 ## Examples
 ### Swiss Roll
-
-The first example is a point cloud of 500 points that sampled from the "Swiss roll" function (a dataset commonly used in dimension reduction).
+The first example is a point cloud that sampled from the "Swiss roll" function (a 2D manifold commonly used in dimension reduction). It contains 500 points in $\mathbb{R}^3$, the edge weights are set to represent the Euclidean distance between vertices in $\mathbb{R}^3$.
 
 <div style="text-align: center">
 <img src="img/swiss-roll.png" width="600"/>
@@ -507,21 +511,56 @@ The first example is a point cloud of 500 points that sampled from the "Swiss ro
 </div>
 
 * a) Vertex $n$ at which the wavelets are centered
-* b) Scaling function $h$
+* b) Scaling function $\phi_n$
 * c) Graph wavelet $\psi_{s_1,n}$
 * d) Graph wavelet $\psi_{s_2,n}$
 * e) Graph wavelet $\psi_{s_3,n}$
 * f) Graph wavelet $\psi_{s_4,n}$
 * $s_1>s_2>s_3>s_4$
 
+The goal of this example is to show that for a 2D manifold that is embedded in 3D space, the support of the scaling function and wavelets will automatically adapt to the structure of the underlying 2D manifold.
+
 ### Minnesota Road Network
+The second example is a road network in Minnesota. The edges represent the roads, they don't have any weights (i.e, a binary adjacency matrix is used), the vertices represent intersections.
+
+<div style="text-align: center">
+<img src="img/road-network.png" width="600"/>
+<p><em>Fig. 10. Wavelets on Minnesota road network.</em></p>
+</div>
+
+* a) Vertex $n$ at which the scaling function and wavelets are centered
+* b) Scaling function $\phi_n$
+* c) Graph wavelet $\psi_{s_1,n}$
+* d) Graph wavelet $\psi_{s_2,n}$
+* e) Graph wavelet $\psi_{s_3,n}$
+* f) Graph wavelet $\psi_{s_4,n}$
+* $s_1>s_2>s_3>s_4$
+
+The goal of this example is to show that SGWT could be useful for network analysis.
 
 ### Regular Grid of Lake Geneva
+The last example is a $256\times153$ masked regular grid of the lake Geneva, i.e., if a vertex is mapped to the lake surface, it is labeled as $1$, otherwise, label it as $0$. Only vertices within the lake are used to construct the graph. Again, this example only use a binary adjacency matrix.
+
+<div style="text-align: center">
+<img src="img/lake.png" width="600"/>
+<p><em>Fig. 11. Wavelets on masked regular grid of the lake Geneva.</em></p>
+</div>
+
+* a) Graph wavelet $\psi_{s_1,n}$
+* b) Graph wavelet $\psi^{'}_{s_1,n}$ of the lake using complete mesh (to-do: need to clarify what is complete mesh)
+* c) Contour of $\psi_{s_1,n}$
+* d) Contour of $\psi^{'}_{s_1,n}$
+
+The goal of this example is to show that SGWT wavelets will implicitly adapt to the irregular boundaries using only the adjacency information.
+
+
 
 ## Appendix
 ### Frame Bound
 
 ### Spatial Localization
+
+### Minimum Norm Solution
 
 ## References
 [1] Hammond, David K., Pierre Vandergheynst, and Rémi Gribonval. "[Wavelets on graphs via spectral graph theory.](https://www.sciencedirect.com/science/article/pii/S1063520310000552)" Applied and Computational Harmonic Analysis 30.2 (2011): 129-150.
