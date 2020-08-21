@@ -618,7 +618,7 @@ $$z=W^+c$$
 
 then $\\\|z\\\|_2\leq\\\|x\\\|_2$ for all solutions $x\in\mathbb{R}^N$.
 
-However, since we have proved that columns of $W$ are linear independent given frame bound $A>0$ (see [Appendix](#frame-bound)), the pseudoinverse $W^+$ satisfied $W^+W=I$, we have $W^+c=f$ which is exactly what we want in the signal reconstruction, hence, this minimum norm property of pseudoinverse is not necessary in current literature.
+However, since we have proved that columns of $W$ are linear independent given frame bound $A>0$ (see [Appendix](#frame-bound)), the pseudoinverse $W^+$ satisfied $W^+W=I$, we have $W^+c=f$ which is exactly what we want in the signal reconstruction, hence, this minimum norm property of pseudoinverse is not necessary in current literature. In the last version paper [Hammond et al., 2019](https://hal.inria.fr/hal-01943589/document), this part is removed.
 
 ## References
 [1] Hammond, David K., Pierre Vandergheynst, and Rémi Gribonval. "[Wavelets on graphs via spectral graph theory.](https://www.sciencedirect.com/science/article/pii/S1063520310000552)" Applied and Computational Harmonic Analysis 30.2 (2011): 129-150.
