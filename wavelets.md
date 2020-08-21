@@ -589,11 +589,11 @@ The stability of recovering the signal $f$ from the transform coefficients (such
 
 Formally, for a Hilbert space $\mathscr{H}$, a set of vectors $\Gamma_n\in\mathscr{H}$ is said to be a frame with frame bounds $A$ and $B$ if for all $f\in\mathscr{H}$, the following condition is true:
 
-$$A\\\|f\\\|^2 \leq \\\|\langle \Gamma_n,f \rangle\\\|^2 \leq B\\\|f\\\|^2$$
+$$A\|f\|^2 \leq \|\langle \Gamma_n,f \rangle\|^2 \leq B\|f\|^2$$
 
 In [Hammond et al., 2019](https://hal.inria.fr/hal-01943589/document) **Theorem 1**:
 
-Given a set of scales $\{s_j\}_{j=1}^J$, the set $\Gamma=\{\phi_n\}_{n=1}^N \cup \{\psi_{s_j,n}\}_{j=1}^{J}{}_{n=1}^N$ forms a frame with bounds $A$, $B$ given by:
+Given a set of scales $$\{s_j\}_{j=1}^J$$, the set $$\Gamma=\{\phi_n\}_{n=1}^N \cup \{\psi_{s_j,n}\}_{j=1}^{J}{}_{n=1}^N$$ forms a frame with bounds $A$, $B$ given by:
 
 $$A=\underset{\lambda\in[0,\lambda_{N-1}]}{min} G(\lambda)$$
 
