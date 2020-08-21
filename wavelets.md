@@ -284,7 +284,7 @@ On graphs, the localization property of a normalized graph wavelet $$\frac{\psi_
 
 **when $s$ is small (corresponding to high frequency information), $$\frac{\psi_{s,n}}{\|\psi_{s,n}\|}$$ will approach $0$ for vertices that are far away from the center vertex $n$.**
 
-If this is true, then for some small scale $s$, when we plot the normalized wavelet $$\frac{\psi_{s,n}}{\|\psi_{s,n}\|}$$ on graph, its value will gradually decay from the center vertex $n$ to its connected vertices, which is said to localized around vertex $n$.
+If this is true, then for some small scale $s$, when we plot the normalized wavelet $$\frac{\psi_{s,n}}{\|\psi_{s,n}\|}$$ on graph, its value will gradually decay from the center vertex $n$ to its connected vertices, which is said to be localized around vertex $n$.
 
 In [Hammond et al., 2019](https://hal.inria.fr/hal-01943589/document), the localization property of the graph wavelets is proved by:
 
