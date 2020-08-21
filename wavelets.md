@@ -35,6 +35,7 @@ The challenges of designing the wavelet transform on graphs are mainly twofold:
 - [Graph Fourier Transform](#graph-fourier-transform)
 - [Spectral Graph Wavelet Transform (SGWT)](#spectral-graph-wavelet-transform--sgwt)
 - [Scaling Functions](#scaling-functions)
+- [Localization of Graph Wavelets](#localization-of-graph-wavelets)
 - [Polynomial Approximation](#polynomial-approximation)
   * [Chebyshev Polynomials](#chebyshev-polynomials)
   * [Chebyshev Approximation](#chebyshev-approximation)
@@ -49,7 +50,6 @@ The challenges of designing the wavelet transform on graphs are mainly twofold:
   * [Regular Grid of Lake Geneva](#regular-grid-of-lake-geneva)
 - [Appendix](#appendix)
   * [Frame Bound](#frame-bound)
-  * [Spatial Localization](#spatial-localization)
   * [Minimum Norm Solution](#minimum-norm-solution)
 - [References](#references)
 
@@ -275,6 +275,32 @@ $$S_f(n)=\langle \psi_{s,n},f \rangle$$
 
 
 
+## Localization of Graph Wavelets
+The main advantage of the wavelet transform over the Fourier transform is that the wavelets can be well localized in both frequency and space domain.
+
+Similarly, in SGWT the graph wavelets can be localized in frequency domain if we design their wavelet kernel $g(\lambda)$ as a bandpass filter. However, we have not discussed how to make the graph wavelets localized in space domain.
+
+On graphs, the localization property of a normalized graph wavelet $\frac{\psi_{s,n}}{\|||\psi_{s,n}\|||}$ can be interpret as that:
+
+**when $s$ is small (corresponding to high frequency information), $\frac{\psi_{s,n}}{\|||\psi_{s,n}\|||}$ will approach $0$ for vertices that are far away from the center vertex $n$.**
+
+If this is true, then for some small scale $s$, when we plot the normalized wavelet $\frac{\psi_{s,n}}{\|||\psi_{s,n}\|||}$ on graph, its value will gradually decay from the center vertex $n$ to its connected vertices, which is said to localized around vertex $n$.
+
+In [Hammond et al., 2019](https://hal.inria.fr/hal-01943589/document), the localization property of the graph wavelets is proved by:
+
+* **Lemma 2**: If two kernel function $g$ and $\widetilde{g}$ are close to each other, then their resulting wavelets $\psi_{s,n}$ and $\widetilde{\psi}_{s,n}$ should also be close to each other. This is the necessary justification if we want to prove the localization property of $\psi_{s,n}$ by proving $\widetilde{\psi}_{s,n}$ is localized. (An error bound $M(s)$ is used in Lemma 2: $|g(s\lambda)-\widetilde{g}(s\lambda)| \leq M(t)$, this error bound is proved in Lemma 4 $M(s) \leq s^{K+1}\frac{\lambda_{N-1}^{K+1}}{(K+1)!}B$.)
+
+* **Lemma 3**: The powers of graph Laplacian $\mathscr{L}^k$ are localized on graphs. Then for wavelets $\psi_{s,n}$ that can be approximated by some powers of graph Laplacian $\mathscr{L}^k$, $\psi_{s,n}$ will also be localized on graphs.
+
+* **Lemma 4**: The approximation error of $\psi_{s,n}$ using $\mathscr{L}^k$ is only proved for some specific kernel $g$. That is:
+kernel $g$ should satisfies $g(0)=0$ and is sufficient smooth around 0 ($g^{(r)}(0)=0$ for all $r<K$), then we can approximate the scaled kernel $g(s\lambda)$ by $\widetilde{g}(s\lambda)$, which is a Taylor expansion of $g(s\lambda)$. Since $g^{(r)}(0)=0$ for all $r<K$, so only the last term in this expansion is nonzero, and it is a power of $s\lambda$, finally, its corresponding wavelet can be expressed as a power of $\mathscr{L}$ which is localized on graph. Additionally, it is proved that for this kind of kernels, the approximation error $M(s)=\underset{\lambda\in[0,\lambda_{N-1}]}{sup}|g(s\lambda)-\widetilde{g}(s\lambda)| \leq s^{K+1}\frac{\lambda_{N-1}^{K+1}}{(K+1)!}B$ is indeed bounded.
+
+* **Theorem 2**: With all the previous Lemmas, here the localization property of $\frac{\psi_{s,n}}{\|||\psi_{s,n}\|||}$ is proved, such that if $s\rightarrow 0$, then for vertices that are far away from the center vertex $n$, this normalized graph wavelet will decay to zero.
+
+If you are interested in more details about how these Lemmas and Theorem are proved, it is welcome to refer to my fully annotated version of this paper [Wavelets on graphs via spectral graph theory](https://www.overleaf.com/read/sgpjrkfvjzwv).
+
+
+
 ## Polynomial Approximation
 We now have the idea of what SGWT is, it is simply a scaling function in addition to several graph wavelets with different scale values that each covers a sub-band of the graph spectrum in the frequency domain. However, one problem to the current SGWT design is that, it requires the eigendecomposition of the graph Laplacian $\mathscr{L}=U\Lambda U^T$ to obtain the eigenbasis $U$ and all the eigenvalues $\Lambda$. The eigendecomposition is a very expansive process which is of $O(N^3)$ time complexity, for any graph that has more a few thousands of vertices, current SGWT will be infeasible to apply.
 
@@ -450,7 +476,7 @@ The SGWT kernel $g(\lambda)$ is a bandpass filter, it should satisfies:
 * $g(0)=0$
 * $\lim_{\lambda\rightarrow\infty}g(\lambda)=0$
 
-In addition to these, in order to ensure the spatial localization of the graph wavelets, the kernel $g(\lambda)$ should also behaves as a monic power of $\lambda$ near the origin (see [Appendix](#spatial-localization)).
+In addition to these, in order to ensure the spatial localization of the graph wavelets, the kernel $g(\lambda)$ should also behaves as a monic power of $\lambda$ near the origin (see section [Localization of Graph Wavelets](#localization-of-graph-wavelets)).
 
 [Hammond et al., 2011](https://www.sciencedirect.com/science/article/pii/S1063520310000552) designed a kernel function $g(x)$ that is exactly a monic power near $0$, and will decay to 0 for large $\lambda$, in between, the kernel function is set to be a cubic spline that ensuring continuity of $g$ and $g^{'}$:
 
@@ -578,9 +604,6 @@ where $G(\lambda)=h^2(\lambda)+\sum_j{g(s_{j}\lambda)^2}$.
 Theorem 1 gives the frame bounds of $\Gamma$.
 
 In particularly, when $A>0$, $\Gamma$ is a Riesz sequence such that all vectors in $\Gamma$ are linearly independent to each other.
-
-
-### Spatial Localization
 
 ### Minimum Norm Solution
 Since we interpret the forward SGWT as a linear mapping (represented as matrix $W$) from $\mathbb{R}^N$ to $\mathbb{R}^{N(J+1)}$, the number of coefficients $c=Wf$ is $N(J+1)$, which is greater than the dimension of the graph signal $N$, it is a overcomplete transform, so that we can construct infinite number of left inverse $M$ such that $MW=I$.
