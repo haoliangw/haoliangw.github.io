@@ -58,6 +58,8 @@ The challenges of designing the wavelet transform on graphs are mainly twofold:
 
 
 ## Classical Continuous Wavelet transform
+Before discussing the graph wavelet transform, we first need to know what is the wavelet transform.
+
 The classical continuous wavelet transform (CWT) is construct from the **mother wavelet function $\psi(x)$**, which is a wave-like function that will burst for a short time and then quickly die away. To generate a continuous family of wavelets, we simply scale and translate the mother wavelet by a continuous scaling factor $s>0$ and a continuous translation factor $a$:
 
 $$\psi_{s,a}(x)=\frac{1}{s}\psi(\frac{x-a}{s})$$
@@ -87,6 +89,8 @@ So far, we are assuming that $f(x)$ is a signal on the real line, now we want to
 The SGWT did not approach to these two challenges directly, instead, they design the mother wavelet in the frequency domain, and shown that scaling could be also done in the frequency domain. As for the translation operation, a delta impulse function (only have value 1 at one point and 0 everywhere else) was introduced to show that, translating a mother wavelet is the same as applying the mother wavelet to a delta impulse, this is useful because we can easily design a delta function on graphs, which is simply a vector that only only have value 1 at certain vertex and 0 elsewhere.
 
 ### CWT as a Bandpass Filter
+The designing of the mother wavelet and its corresponding scaling operation can be accomplished in the frequency domain instead of in the space domain, this is done by interpreting the CWT as a bandpass filter.
+
 We now know that the CWT computes the inner product of a scaled and translated mother wavelet $\psi_{s,a}(x)=\frac{1}{s}\psi(\frac{x-a}{s})$ with a signal $f(x)$:
 
 $$CWT=\langle \psi_{s,a}, f \rangle=\int_{-\infty}^{\infty}\frac{1}{s}\psi^*(\frac{x-a}{s})f(x)dx$$
@@ -109,17 +113,19 @@ From these two equations, we could see that scaling a wavelet by $\frac{1}{s}$ i
 <p><em>Fig. 2. Scaling a wavelet in frequency domain with scale values 1,2 and 4. (Image source:<a href="https://www.mathworks.com/help/wavelet/gs/continuous-wavelet-transform-as-a-bandpass-filter.html">MathWorks</a>)</em></p>
 </div>
 
-In [Fig. 2](#scale-wavelets), $\omega$ corresponds to the frequency, $\hat{\psi}(\omega)$ is the Fourier transform of the wavelet function $\psi$, the amplitude of $\hat{\psi}(\omega)$ shows how much the wavelet contains certain frequency components, it is centered at $\omega_0$, which termed as the **center frequency**, it is the main frequency component of wavelet $\psi$. The support (none-zero part) of $\hat{\psi}(\omega)$ is the frequency band the wavelet contains (wavelet spectrum), when we do the wavelet transform, we multiple this $\hat{\psi}(\omega)$ with the frequencies of the signal ($\hat{f}$), only the frequency components within the support of the wavelet will remain, that is why CWT can act as a **bandpass filter** (only frequencies in a frequency band are passed).
+In [Fig. 2](#scale-wavelets), $\omega$ corresponds to the frequency, $\hat{\psi}(\omega)$ is the Fourier transform of the wavelet function $\psi$, the amplitude of $\hat{\psi}(\omega)$ shows how much the wavelet contains certain frequency components, the support (none-zero part) of $\hat{\psi}(\omega)$ is the frequency band the wavelet contains (wavelet spectrum), it is centered at $\omega_0$, which termed as the **center frequency**. The wavelet transform is done by multiplying the frequencies of the signal ($\hat{f}$) with $\hat{\psi}(\omega)$, since $\hat{\psi}(\omega)$ is zero except for a short frequency band around $\omega_0$, then only the frequency components within the support of $\hat{\psi}(\omega)$ will remain, this is why CWT can act as a **bandpass filter** (only frequencies in a frequency band are passed).
 
-Also in this figure, from the top to the bottom are three wavelets with different scales (1, 2, 4 respectively), we see that the center frequency has changed along with the scale. Bigger the scale, lower the center frequency ($\omega/s$). CWT coefficients at lower scales represent energy in the input signal at higher frequencies, while CWT coefficients at higher scales represent energy in the input signal at lower frequencies. Noticed that, the width of the bandpass filter also changed, it is inversely proportional to scale. The width of the CWT filters decreases with increasing scale. This follows from the uncertainty relationships between the time and frequency support of a signal: the broader the support of a signal in time, the narrower its support in frequency. The converse relationship also holds.
+Also [Fig. 2](#scale-wavelets), from the top to the bottom are three wavelets with different scales (1, 2, 4 respectively), we see that the center frequency has changed along with the scale. Bigger the scale, lower the center frequency ($\omega/s$). CWT coefficients at lower scales represent energy in the input signal at higher frequencies, while CWT coefficients at higher scales represent energy in the input signal at lower frequencies. Noticed that, the width of the bandpass filter also changed, it is inversely proportional to scale. The width of the CWT filters decreases with increasing scale. This follows from the uncertainty relationships between the time and frequency support of a signal: the broader the support of a signal in time, the narrower its support in frequency. The converse relationship also holds.
 
-### Delta Functions
+### Delta Function
+Delta function is used to construct a wavelet translation analogue for CWT, which can be later defined in the graph domain.
+
 <div style="text-align: center">
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Dirac_distribution_PDF.svg/650px-Dirac_distribution_PDF.svg.png" width="450"/>
 <p><em>Fig. 3. The delta function. (Image source:<a href="https://www.wikiwand.com/en/Dirac_delta_function#:~:text=As%20a%20distribution%2C%20the%20Dirac,of%20the%20Dirac%20delta%20function.">Wikipedia</a>)</em></p>
 </div>
 
-The **delta function $\delta(x)$**, also called the **Dirac delta function** or the **unit impulse symbol** in engineering and signal processing, is drawn as a singular arrow at one point to indicate an infinitely tall spike (an impulse). The y-axis value 1 represent its density ($\int_{-\infty}^{\infty}\delta(x)dx=1$), not height.
+The **delta function $\delta(x)$**, also called the **Dirac delta function** or the **unit impulse symbol** in engineering and signal processing, is drawn as a singular arrow at one point to indicate an infinitely tall spike (an impulse). The y-axis value 1 represents its density ($\int_{-\infty}^{\infty}\delta(x)dx=1$), not height.
 
 The delta function has an important property: **Convolution of a function $f(x)$ with a shifted delta function $\delta(x-a)$ yields a shifted version of that function of the same amount $f(x-a)$:**
 
@@ -140,6 +146,8 @@ Later, this result will be used to define the translation operation on graphs.
 
 
 ## Notations for Weighted Graph
+In order to formally define the graph wavelet transform, we need to introduce some notations for weighted graph.
+
 A **weighted graph $G = \\\{E, V, w\\\}$** consists of:
 
 * a set of vertices $V$, where $\|V\| = N < \infty$.
@@ -180,6 +188,8 @@ Noticed that:
 
 
 ## Graph Fourier Transform
+We already know that the classical CWT can be rewritten as an inverse Fourier transform, which requires the Fourier transform of the signal. In the graph domain, this is done by the graph Fourier transform.
+
 The graph Fourier transform is based on the **eigendecomposition of the graph Laplacian**:
 
 $$\mathscr{L}=U\Lambda U^T$$
@@ -238,7 +248,7 @@ We have learned that translation of a wavelet can be achieved by applying it to 
 
 $$\psi_{s,a}(x)=\psi_{s}(x) \star \delta(x-a)$$
 
-Then for SGWT, the graph wavelet at scale $s$ is $\psi_s=Ug(s\Lambda)U^T$, translating this graph wavelet to centered on vertex $n$ is similar as applying $\psi_s$ to a delta function $\delta_n\in\mathbb{R}^N$ which only has value $1$ at on vertex $n$ and zeros elsewhere:
+Then for SGWT, the graph wavelet at scale $s$ is $\psi_s=Ug(s\Lambda)U^T$, translating this graph wavelet to centered on vertex $n$ is similar as applying $\psi_s$ to a delta function $\delta_n\in\mathbb{R}^N$ which only has value $1$ at on vertex $n$ and zeros elsewhere (treat $\delta_n$ as a signal $f$ that only has value $1$ at vertex $n$):
 
 $$\psi_{s,n}=\psi_s\delta_n=Ug(s\Lambda)U^T\delta_n$$
 
@@ -256,7 +266,7 @@ Recall that, when we double the scale value $s$, the center frequency of the wav
 <p><em>Fig. 4. A scaling function that covers the low frequency band. (Image source:<a href="http://www.polyvalens.com/blog/wavelets/theory/.">PolyValens</a>)</em></p>
 </div>
 
-Scaling functions are particularly useful when the scale value is not allowed to become arbitrarily large to recover the low frequency components of the signal. In the SGWT, the scaling function is defined similar to the graph wavelets $\phi=Uh(\Lambda)U^T$, using a non-negative kernel $h(\lambda)$ which essentially is a lowpass filter. $h(\lambda)$ satisfies that $h(0)>0$ and $\lim_{\lambda\rightarrow\infty}h(\lambda)=0$. The used of the scaling function ensure stable recovery of the original signal $f$ when the scale value is sampled at a discrete manner.
+Scaling functions are particularly useful when the scale value is not allowed to become arbitrarily large to recover the low frequency components of the signal. In the SGWT, the scaling function $\phi=Uh(\Lambda)U^T$ is defined similar to the graph wavelets $\psi=Ug(\Lambda)U^T$, using a non-negative kernel $h(\lambda)$ which essentially is a lowpass filter. $h(\lambda)$ satisfies that $h(0)>0$ and $\lim_{\lambda\rightarrow\infty}h(\lambda)=0$. The used of the scaling function ensure stable recovery of the original signal $f$ when the scale value is sampled at a discrete manner.
 
 <div style="text-align: center">
 <img src="img/sgwt-scaling-function.png" width="600" id="kernels"/>
@@ -288,7 +298,7 @@ The normalization $$\|\psi_{s,n}\|$$ is needed since $\psi_{s,n}$ already will a
 
 In [Hammond et al., 2019](https://hal.inria.fr/hal-01943589/document), the spatial localization property of the graph wavelets is proved by:
 
-* **Lemma 2**: If two kernel function $g$ and $\widetilde{g}$ are close to each other, then their resulting wavelets $\psi_{s,n}$ and $$\widetilde{\psi}_{s,n}$$ should also be close to each other. This is the necessary justification if we want to prove the localization property of $\psi_{s,n}$ by proving $$\widetilde{\psi}_{s,n}$$ is localized. (An error bound $M(s)$ is used in Lemma 2: $$\|g(s\lambda)-\widetilde{g}(s\lambda)\| \leq M(t)$$, this error bound is proved in Lemma 4 $M(s) \leq s^{K+1}\frac{\lambda_{N-1}^{K+1}}{(K+1)!}B$.)
+* **Lemma 2**: If two kernel function $g$ and $\widetilde{g}$ are close to each other, then their resulting wavelets $\psi_{s,n}$ and $$\widetilde{\psi}_{s,n}$$ should also be close to each other. This is the necessary justification if we want to prove the localization property of $\psi_{s,n}$ by proving $$\widetilde{\psi}_{s,n}$$ is localized. (An error bound $M(s)$ is used in Lemma 2: $$\|g(s\lambda)-\widetilde{g}(s\lambda)\| \leq M(t)$$, this error bound is proved in Lemma 4: $M(s) \leq s^{K+1}\frac{\lambda_{N-1}^{K+1}}{(K+1)!}B$.)
 
 * **Lemma 3**: The powers of graph Laplacian $\mathscr{L}^k$ are localized on graphs. Then for wavelets $\psi_{s,n}$ that can be approximated by some powers of graph Laplacian $\mathscr{L}^k$, $\psi_{s,n}$ will also be localized on graphs.
 
@@ -412,7 +422,7 @@ $$W^+=(W^*W)^{-1}W^*$$
 
 here, $$W^*$$ represents the conjugate transpose (or Hermitian transpose) of $W$, the pseudoinverse $W^+$ is a left inverse of $W$ ($W^*$ and $W^+$ are totally different). In [Hammond et al., 2011](https://www.sciencedirect.com/science/article/pii/S1063520310000552), the minimum-norm property of the pesudoinverse is introduced, however, it has little to do with the reconstruction process, see [Appendix](#minimum-norm-solution) for more detail.
 
-The pseudoinverse $W^+$ only satisfies $W^+W=I$ (i.e., is a left inverse of  $W$) when columns of $W$ are linearly independent (proved in [Appendix](#frame-bound)).
+Note that the pseudoinverse $W^+$ only satisfies $W^+W=I$ (i.e., is a left inverse of  $W$) when columns of $W$ are linearly independent (proved in [Appendix](#frame-bound)).
 
 So the question now become how to define the forward transform of SGWT as a matrix. The answer is actually very simple, we just stack the scaling function $\phi$ and all the graph wavelets $\psi_{s_j}$ at scales $s_1,\dots,s_J$ together to form a giant matrix $W$ that contains all the forward SGWT transform parameters:
 
@@ -546,6 +556,10 @@ The first example is a point cloud that sampled from the "Swiss roll" function (
 * f) Graph wavelet $\psi_{s_4,n}$
 * $s_1>s_2>s_3>s_4$
 
+The graph wavelets centered at vertex $n$ are obtained by:
+
+$$\psi_{s_j,n}=\langle p_j(\mathscr{L}),\delta_n \rangle=\frac{1}{2}c_{j,0}\delta_n+\sum_{k=1}^{M}c_{j,k}\overline{T}_k(\mathscr{L})\delta_n$$
+
 The goal of this example is to show that for a 2D manifold that is embedded in 3D space, the support of the scaling function and wavelets will automatically adapt to the structure of the underlying 2D manifold.
 
 ### Minnesota Road Network
@@ -563,6 +577,8 @@ The second example is a road network in Minnesota. The edges represent the roads
 * e) Graph wavelet $\psi_{s_3,n}$
 * f) Graph wavelet $\psi_{s_4,n}$
 * $s_1>s_2>s_3>s_4$
+
+The graph wavelets are obtains using the same method as in the previous example.
 
 The goal of this example is to show that SGWT could be useful for network analysis.
 
