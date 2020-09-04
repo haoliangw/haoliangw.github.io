@@ -17,13 +17,13 @@ The challenges of designing the wavelet transform on graphs are mainly twofold:
 
   In the SGWT, the wavelet designing problem and the scaling problem are both solved by a wavelet transform analogue in the frequency domain. It is done by first showing that the scaling of a wavelet in the space domain can be completely transferred to the frequency domain, where a scaled wavelet acts as a bandpass filter (only frequencies in a frequency band are passed). Hence in the SGWT, instead of scaling in the space domain, we scale the mother wavelet in the frequency domain. A real-valued kernel function $g(\lambda)$ is designed to represent the corresponding bandpass filter of the mother wavelet in the frequency domain, thus, we no longer need to worry about how to design the mother wavelet in a non-Euclidean space, we just need to make sure that the corresponding wavelets of $g(\lambda)$ in the graph domain are indeed localized. Then for some discrete scale values $s_1,s_2,\dots,s_J$, we could obtain multiple kernel functions $g(s_1\lambda), g(s_2\lambda),\dots,g(s_J\lambda)$ such that each of them will cover a sub-band of the entire graph spectrum.
 
-  For the translation problem, a delta function (only have value 1 at one point and 0 everywhere else) was introduced to show that translating a mother wavelet is the same as applying the mother wavelet to a delta function.
+  For the translation problem, a delta function (only have value at one point and 0 everywhere else) was introduced to show that translating a mother wavelet is the same as applying the mother wavelet to a delta function.
 
 * **How to make the graph wavelet transform efficient for large graphs.**
 
   Based on the solution to the scaling problem, a Fourier transform of the graph data is needed, it is done by diagonalizing the graph Laplacian matrix $\mathscr{L}=U\Lambda U^T$ (also termed as the eigendecomposition) to obtain the frequencies of the graph and its corresponding eigenbasis. However, this eigendecomposition is of $O(N^3)$ time complexity. For any graph with more than a few thousands vertices, the SGWT will be too expansive to use.
 
-  Hence, a polynomial approximation approach is used to calculate the transform without the expansive eigendecomposition. It is achieved by directly approximating the kernel function $g(s\lambda)$ using truncated Chebyshev polynomials. The maximum error of the truncated Chebyshev polynomials is only a slightly higher than that of the minimax polynomial (the unique polynomial which has the smallest maximum deviation from the true function), and in the region where $g(s\lambda)$ is smooth, truncated Chebyshev polynomials have significantly lower approximation error.
+  Hence, a polynomial approximation approach is used to calculate the transform without using the expansive eigendecomposition. It is achieved by directly approximating the kernel function $g(s\lambda)$ using truncated Chebyshev polynomials. The maximum error of the truncated Chebyshev polynomials is only a slightly higher than that of the minimax polynomial (the unique polynomial which has the smallest maximum deviation from the true function), and in the region where $g(s\lambda)$ is smooth, truncated Chebyshev polynomials have significantly lower approximation error.
 
 
 
@@ -236,7 +236,7 @@ In other words, the CWT at scale $s$ and translation $a$ can be done by:
 
 Following this process, we can design the **SGWT** as:
 
-$$SGWT=Ug(s\Lambda)U^Tf$$
+$$SGWT=\psi_{s}f=Ug(s\Lambda)U^Tf$$
 
 where:
 
@@ -290,7 +290,7 @@ Similarly, in SGWT the graph wavelets can be localized in frequency domain if we
 
 On graphs, the localization property of a normalized graph wavelet $$\frac{\psi_{s,n}}{\|\psi_{s,n}\|}$$ can be interpret as that:
 
-**when $s$ is small (corresponding to high frequency information), $$\frac{\psi_{s,n}}{\|\psi_{s,n}\|}$$ will approach $0$ for vertices that are far away from the center vertex $n$.**
+**when $s$ is small, normalized graph wavelet $$\frac{\psi_{s,n}}{\|\psi_{s,n}\|}$$ will approach $0$ for vertices that are far away from the center vertex $n$.**
 
 If this is true, then for some small scale $s$, when we plot the normalized wavelet $$\frac{\psi_{s,n}}{\|\psi_{s,n}\|}$$ on graph, its value will gradually decay from the center vertex $n$ to its connected vertices, which is said to be localized around vertex $n$.
 
