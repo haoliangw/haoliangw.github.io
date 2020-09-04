@@ -55,6 +55,19 @@ The challenges of designing the wavelet transform on graphs are mainly twofold:
 
 <small><em><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></em></small>
 
+We will first learn what is the [Classical Continuous Wavelet transform](#classical-continuous-wavelet-transform), and how we can interpret CWT as a bandpass filter in the Fourier domain, and how to use delta function to define translation operation for wavelets, later in section [Spectral Graph Wavelet Transform (SGWT)](#spectral-graph-wavelet-transform--sgwt) we will use these ideas to design similar operations on graphs.
+
+Then, before discussing the formal definition of SGWT, we need to introduce some [Notation for Weighted Graphs](#notation-for-weighted-graphs) and the [Graph Fourier Transform](#graph-fourier-transform), which are the foundation of SGWT.
+
+The [Spectral Graph Wavelet Transform (SGWT)](#spectral-graph-wavelet-transform--sgwt) is designed in a similar way as the [Classical Continuous Wavelet transform](#classical-continuous-wavelet-transform), the graph wavelet kernel $$g(s\lambda)$$ is acting as a bandpass filter in the graph spectrum, by using different scale value $$s$$, the wavelet can cover different frequency band of the graph. However, to cover the entire low frequency band of the graph, we need to increase the scale value to a large number, which is not realistic in practice, hence, we introduce a [Scaling Functions](#scaling-functions) to manually cover the low frequency band. The localization property of the graph wavelets is discussed in section [Localization of Graph Wavelets](#localization-of-graph-wavelets).
+
+The eigendecomposition of the graph Laplacian is very time consuming, this could be avoided by approximating the wavelet kernel $$g(\lambda)$$ using truncated Chebyshev polynomials ([Polynomial Approximation](#polynomial-approximation)). After the Chebyshev approximation, a fast computation trick for SGWT is also discussed ([Fast Computation of SGWT](#fast-computation-of-sgwt)).
+
+Sometimes we may want to revert the wavelet transform to reconstruct the input signal. An inverse process of SGWT that using pseudoinverse is discussed in [Inverse Graph Wavelet transform](#inverse-graph-wavelet-transform).
+
+In previous sections, the wavelet kernel $$g(s\lambda)$$ is acting as a bandpass filter, and by using different scale value $s$, we could cover different frequency band of the graph, how to design this kernel function $g(\lambda)$ and how to select the scale values are discussed in [SGWT Design Details](#sgwt-design-details).
+
+Three examples are shown in section [Examples](#examples).
 
 
 ## Classical Continuous Wavelet transform
