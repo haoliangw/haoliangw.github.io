@@ -557,7 +557,7 @@ The maximum scale $s_1$ and the minimum scale $s_J$ are selected such that:
 The first example is a point cloud that sampled from the "Swiss roll" function (a 2D manifold commonly used in dimension reduction). It contains 500 points in $\mathbb{R}^3$, the edge weights are set to represent the Euclidean distance between vertices in $\mathbb{R}^3$.
 
 <div style="text-align: center">
-<img src="img/swiss-roll.png" width="600"/>
+<img src="img/swiss-roll.png" width="600" id="swiss-roll"/>
 <p><em>Fig. 9. Wavelets on point cloud of the Swiss roll. (Image source:<a href="https://hal.inria.fr/hal-01943589/document.">Hammond et al., 2019</a>)</em></p>
 </div>
 
@@ -569,9 +569,31 @@ The first example is a point cloud that sampled from the "Swiss roll" function (
 * f) Graph wavelet $\psi_{s_4,n}$
 * $s_1>s_2>s_3>s_4$
 
-The graph wavelets centered at vertex $n$ are obtained by:
+In [Fig. 9](#swiss-roll), a) depicts a single vertex $n$ on which the wavelets are centered; b) is the scaling function center on vertex $n$; from c) to f) are the wavelets centered on vertex $n$ with increasing scale values (increasing frequencies). Since we are the Euclidean distance to represent edge weight, the scaling function and wavelets are all focused around the center vertex $n$ in the space, vertices that are close to vertex $n$ are highlighted while vertices that are far away from the center vertex $n$ have value 0 in $\phi_n$ and $\psi_n$. The wavelets $\psi$ and the scaling function $\phi$ are obtain using the following process:
+
+The SGWT is defined as:
+
+$$SGWT=\psi_{s}f=Ug(s\Lambda)U^Tf$$
+
+The graph wavelet at scale $s$ is $\psi_{s}f=Ug(s\Lambda)U^T$, the scaling of the wavelet is done in the frequency domain by changing the scale value $s$ in the kernel $g(s\Lambda)$.
+
+To avoid the eigendecomposition of $\mathscr{L}=U\Lambda U^T$, Chebyshev approximation is used:
+
+$$\psi_{s}=Ug(s\Lambda)U^T\approx Up(\Lambda)U^T=p(U\Lambda U^T)=p(\mathscr{L})$$
+
+To center the wavelet on an vertex $n$, a shifted delta function is used:
+
+$$\psi_{s,n}=\psi_{s}\delta_n=Ug(s\Lambda)U^T\delta_n$$
+
+The graph wavelet of scale $s_j$ centered on vertex $n$ is obtained by:
 
 $$\psi_{s_j,n}=\langle p_j(\mathscr{L}),\delta_n \rangle=\frac{1}{2}c_{j,0}\delta_n+\sum_{k=1}^{M}c_{j,k}\overline{T}_k(\mathscr{L})\delta_n$$
+
+where:
+
+$$c_{j,k}=\frac{2}{\pi}\int_0^\pi {\cos(k\theta)g(s_j\frac{\lambda_{max}}{2}(\cos(\theta)+1))d\theta}$$
+
+The scaling function $\phi$ is obtain using the same method as the graph wavelets except replacing the wavelet kernel $g(\lambda)$ with scaling function kernel $h(\lambda)$.
 
 The goal of this example is to show that for a 2D manifold that is embedded in 3D space, the support of the scaling function and wavelets will automatically adapt to the structure of the underlying 2D manifold.
 
